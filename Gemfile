@@ -25,5 +25,6 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'shoulda-matchers'
 end
 
