@@ -13,5 +13,7 @@ describe Convention do
     FactoryGirl.create(:convention)
     expect(FactoryGirl.build(:convention)).not_to be_valid
   end
+
+  it { should have_many(:convention_years) }
 end
 

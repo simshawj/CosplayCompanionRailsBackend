@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506191149) do
+ActiveRecord::Schema.define(version: 20150507232334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,9 +20,12 @@ ActiveRecord::Schema.define(version: 20150506191149) do
     t.integer  "year"
     t.date     "start"
     t.integer  "days"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "convention_id"
   end
+
+  add_index "convention_years", ["convention_id"], name: "index_convention_years_on_convention_id", using: :btree
 
   create_table "conventions", force: :cascade do |t|
     t.string   "name"
@@ -31,4 +34,5 @@ ActiveRecord::Schema.define(version: 20150506191149) do
     t.datetime "updated_at",  null: false
   end
 
+  add_foreign_key "convention_years", "conventions"
 end
