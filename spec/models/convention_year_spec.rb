@@ -58,5 +58,7 @@ describe ConventionYear do
     expect(FactoryGirl.build(:convention_year, convention: FactoryGirl.create(:convention, name: "Second Convention"))).to be_valid
   end
 
+  it { should have_many(:photo_shoots) }
 
 end
+
