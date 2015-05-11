@@ -139,7 +139,7 @@ GEM
       rdoc (~> 4.0)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
-    sprockets (3.0.3)
+    sprockets (3.1.0)
       rack (~> 1.0)
     sprockets-rails (2.3.0)
       actionpack (>= 3.0)
