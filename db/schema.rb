@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150509021758) do
+ActiveRecord::Schema.define(version: 20150512012943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20150509021758) do
     t.integer  "convention_id"
   end
 
+  add_index "convention_years", ["convention_id", "year"], name: "index_convention_years_on_convention_id_and_year", unique: true, using: :btree
   add_index "convention_years", ["convention_id"], name: "index_convention_years_on_convention_id", using: :btree
 
   create_table "conventions", force: :cascade do |t|
@@ -33,6 +34,8 @@ ActiveRecord::Schema.define(version: 20150509021758) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "conventions", ["name"], name: "index_conventions_on_name", unique: true, using: :btree
 
   create_table "photo_shoots", force: :cascade do |t|
     t.string   "series"
@@ -45,6 +48,7 @@ ActiveRecord::Schema.define(version: 20150509021758) do
   end
 
   add_index "photo_shoots", ["convention_year_id"], name: "index_photo_shoots_on_convention_year_id", using: :btree
+  add_index "photo_shoots", ["series", "start", "convention_year_id"], name: "index_photo_shoots_on_series_and_start_and_convention_year_id", unique: true, using: :btree
 
   add_foreign_key "convention_years", "conventions"
   add_foreign_key "photo_shoots", "convention_years"
