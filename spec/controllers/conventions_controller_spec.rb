@@ -37,7 +37,7 @@ describe ConventionsController do
     end
 
     context "with an invalid convention" do
-        let(:convention) { FactoryGirl.attributes_for(:convention, name: nil) }
+      let(:convention) { FactoryGirl.attributes_for(:convention, name: nil) }
       it "redirects to the :new view" do
         post :create, convention: convention
         expect(response).to render_template :new
@@ -63,7 +63,18 @@ describe ConventionsController do
       end
     end
 
-    context "with an invalid id"
+    context "with an invalid id" do
+      before(:each) do
+        convention = FactoryGirl.create(:convention)
+        id = convention.id
+        convention.delete
+        get :show, id: id
+      end
+      it "redirects to the :index view" do
+        expect(response).to redirect_to action: "index"
+      end
+      it "sets flash message"
+    end
   end
 
   describe "GET #edit" do
