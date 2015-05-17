@@ -1,13 +1,19 @@
 require 'rails_helper'
 
 describe ConventionsController do
+  let(:invalid_convention_attribs) { FactoryGirl.attributes_for(:convention, name: nil) }
+  let(:convention_attribs) { FactoryGirl.attributes_for(:convention) }
+  let(:convention) { FactoryGirl.create(:convention) }
+  let(:id) { convention.id }
+  let(:second_valid_convention_name) { "A new convention" }
+  let(:second_valid_convention_attribs) { FactoryGirl.attributes_for(:convention, name: second_valid_convention_name) }
+
   describe "GET #index" do
     it "renders the :index view" do
       get :index
       expect(response).to render_template :index
     end
     it "creates a list of Conventions" do
-      convention = FactoryGirl.create(:convention)
       get :index
       expect(assigns(:conventions)).to eq([convention])
     end
@@ -26,70 +32,117 @@ describe ConventionsController do
 
   describe "POST #create" do
     context "with a valid convention" do
-        let(:convention) { FactoryGirl.attributes_for(:convention) }
       it "redirects to the :index view" do
-        post :create, convention: convention
+        post :create, convention: convention_attribs
         expect(response).to redirect_to action: "index"
       end
       it "saves a Convention" do
-        expect{post :create, convention: convention}.to change{Convention.count}.by(1)
+        expect{post :create, convention: convention_attribs}.to change{Convention.count}.by(1)
+      end
+      it "sets flash success message" do
+        post :create, convention: convention_attribs
+        expect(flash[:success]).to be_present
       end
     end
 
     context "with an invalid convention" do
-      let(:convention) { FactoryGirl.attributes_for(:convention, name: nil) }
       it "redirects to the :new view" do
-        post :create, convention: convention
+        post :create, convention: invalid_convention_attribs
         expect(response).to render_template :new
       end
       it "does not save a Convention" do
-        expect{post :create, convention: convention}.not_to change{Convention.count}
+        expect{post :create, convention: invalid_convention_attribs}.not_to change{Convention.count}
       end
-      it "sets flash message"
+      it "sets flash error message" do
+        post :create, convention: invalid_convention_attribs
+        expect(flash[:error]).to be_present
+      end
     end
   end
 
   describe "GET #show" do
     context "with a valid id" do
-      let(:convention) { FactoryGirl.create(:convention) }
-      before(:each) do
-        get :show, id: convention.id
-      end
       it "renders the :show view" do
+        get :show, id: id
         expect(response).to render_template :show
       end
       it "retrieves a Convention" do
+        get :show, id: id
         expect(assigns(:convention)).to eq(convention)
       end
     end
 
     context "with an invalid id" do
-      before(:each) do
-        convention = FactoryGirl.create(:convention)
-        id = convention.id
+      it "redirects to the :index view" do
         convention.delete
         get :show, id: id
-      end
-      it "redirects to the :index view" do
         expect(response).to redirect_to action: "index"
       end
-      it "sets flash message"
+      it "sets flash error message" do
+        convention.delete
+        get :show, id: id
+        expect(flash[:error]).to be_present
+      end
     end
   end
 
   describe "GET #edit" do
-    it "renders the :edit iview"
-    it "retrieves a Convention"
+    context "with a valid id" do
+      it "renders the :edit iview" do
+        get :edit, id: id
+        expect(response).to render_template :edit
+      end
+      it "retrieves a Convention" do
+        get :edit, id: id
+        expect(assigns(:convention)).to eq(convention)
+      end
+    end
+    context "with an invalid id" do
+      it "redirects to the :index view" do
+        convention.delete
+        get :edit, id: id
+        expect(response).to redirect_to action: "index"
+      end
+      it "sets flash error message" do
+        convention.delete
+        get :edit, id: id
+        expect(flash[:error]).to be_present
+      end
+    end
   end
 
   describe "PUT #update" do
-    it "renders the :index view"
-    it "modifies a Convention"
-  end
+    context "with valid attributes" do
+      it "renders the :index view" do
+        put :update, id: id, convention: convention_attribs
+        expect(response).to redirect_to action: "index"
+      end
+      it "modifies a Convention" do
+        put :update, id: id, convention: second_valid_convention_attribs
+        convention.reload
+        expect(convention.name).to eq(second_valid_convention_name)
+      end
+      it "sets a successful flash message" do
+        put :update, id: id, convention: second_valid_convention_attribs
+        expect(flash[:success]).to be_present
+      end
+    end
 
-  describe "DELETE #destroy" do
-    it "redirects to the :index view"
-    it "displays a flash message saying you cannot delete Conventions"
-    it "does nothing to the number of Conventions"
+    context "with invalid attributes" do
+      it "redirects to the :edit view" do
+        put :update, id: id, convention: invalid_convention_attribs
+        expect(response).to render_template :edit
+      end
+      it "does not modify a Convention" do
+        put :update, id: id, convention: invalid_convention_attribs
+        convention.reload
+        expect(convention.name).to eq("Test Convention")
+      end
+      it "sets an error flash message" do
+        put :update, id:id, convention: invalid_convention_attribs
+        expect(flash[:error]).to be_present
+      end
+    end
   end
 end
+
