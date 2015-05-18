@@ -1,9 +1,17 @@
 require 'rails_helper'
 
 describe ConventionYearsController do
+  let(:convention_year) { FactoryGirl.create(:convention_year) }
+
   describe "GET #index" do
-    it "renders the :index view"
-    it "creates a list of convention years"
+    it "renders the :index view" do
+      get :index
+      expect(response).to render_template :index
+    end
+    it "creates a list of convention years" do
+      get :index
+      expect(assigns(:convention_years)).to eq([convention_year])
+    end
   end
 
   describe "GET #new" do
