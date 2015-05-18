@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe ConventionYearsController do
-  let(:convention_year) { FactoryGirl.create(:convention_year) }
+  let(:convention) { create(:convention) }
+  let(:convention_year) { create(:convention_year) }
+  let(:id) { convention_year.id }
+  let(:invalid_attribs) { attributes_for(:convention_year) }
+  let(:convention_year_attribs) { invalid_attribs.merge(convention_id: convention.id) }
 
   describe "GET #index" do
     it "renders the :index view" do
@@ -15,33 +19,69 @@ describe ConventionYearsController do
   end
 
   describe "GET #new" do
-    it "renders the :new view"
-    it "creates a new convention year"
+    it "renders the :new view" do
+      get :new
+      expect(response).to render_template :new
+    end
+    it "creates a new convention year" do
+      get :new
+      expect(assigns(:convention_year)).to be_a_new(ConventionYear)
+    end
   end
 
   describe "POST #Create" do
     context "with a valid convention year" do
-      it "redirects to the :index view"
-      it "saves a convention year"
-      it "sets flash success message"
+      it "redirects to the :index view" do
+        post :create, convention_year: convention_year_attribs
+        expect(response).to redirect_to convention_years_path
+      end
+      it "saves a convention year" do
+        expect{post :create, convention_year: convention_year_attribs}.to change{ConventionYear.count}.by(1)
+      end
+      it "sets flash success message" do
+        post :create, convention_year: convention_year_attribs
+        expect(flash[:success]).to be_present
+      end
     end
 
     context "with an invalid convention year" do
-      it "redirects to the :new view"
-      it "does not save the convnetion year"
-      it "sets flash error message"
+      it "redirects to the :new view" do
+        post :create, convention_year: invalid_attribs
+        expect(response).to redirect_to new_convention_year_path
+      end
+      it "does not save the convnetion year" do
+        expect{post :create, convention_year: invalid_attribs}.not_to change{ConventionYear.count}
+      end
+      it "sets flash error message" do
+        post :create, convention_year: invalid_attribs
+        expect(flash[:error]).to be_present
+      end
     end
   end
 
   describe "GET #edit" do
     context "with a valid id" do
-      it "renders the :edit view"
-      it "retrieves a convention year"
+      it "renders the :edit view" do
+        get :edit, id: id
+        expect(response).to render_template :edit
+      end
+      it "retrieves a convention year" do
+        get :edit, id: id
+        expect(assigns(:convention_year)).to eq(convention_year)
+      end
     end
 
     context "with an invalid id" do
-      it "redirects to the :index view"
-      it "sets flasah error message"
+      it "redirects to the :index view" do
+        convention_year.delete
+        get :edit, id: id
+        expect(response).to redirect_to convention_years_path
+      end
+      it "sets flasah error message" do
+        convention_year.delete
+        get :edit, id: id
+        expect(flash[:error]).to be_present
+      end
     end
   end
 
