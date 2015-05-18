@@ -113,7 +113,7 @@ describe ConventionsController do
 
   describe "PUT #update" do
     context "with valid attributes" do
-      it "renders the :index view" do
+      it "redirects to the :index view" do
         put :update, id: id, convention: convention_attribs
         expect(response).to redirect_to action: "index"
       end
