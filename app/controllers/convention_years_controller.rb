@@ -1,0 +1,2 @@
+class ConventionYearsController < ApplicationController
+end
