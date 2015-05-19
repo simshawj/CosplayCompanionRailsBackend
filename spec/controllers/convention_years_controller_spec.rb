@@ -78,7 +78,7 @@ describe ConventionYearsController do
         get :edit, id: id
         expect(response).to redirect_to convention_years_path
       end
-      it "sets flasah error message" do
+      it "sets flash error message" do
         convention_year.delete
         get :edit, id: id
         expect(flash[:error]).to be_present

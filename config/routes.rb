@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   #   end
   
   resources :conventions, except: :destroy
-  resources :convention_years
+  resources :convention_years, except: :destroy
+  resources :photo_shoots, except: :destroy
 end
 
