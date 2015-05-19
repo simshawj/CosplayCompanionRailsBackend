@@ -24,6 +24,16 @@ class ConventionYearsController < ApplicationController
     end
   end
 
+  def update
+    @convention_year = ConventionYear.find(params[:id])
+    if @convention_year.update(convention_year_params)
+      redirect_to convention_years_path, success: "Convention year successfully updated"
+    else
+      flash[:error] = "Unable to update convention year"
+      render :edit
+    end
+  end
+
   def convention_year_params
     params.require(:convention_year).permit(:year, :start, :days, :convention_id)
   end

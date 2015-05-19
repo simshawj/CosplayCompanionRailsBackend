@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 describe ConventionYearsController do
-  let(:convention) { create(:convention) }
-  let(:convention_year) { create(:convention_year) }
+  let!(:convention) { create(:convention) }
+  let(:convention_year) { create(:convention_year, convention: convention) }
   let(:id) { convention_year.id }
-  let(:invalid_attribs) { attributes_for(:convention_year) }
+  let(:invalid_attribs) { attributes_for(:convention_year).merge(convention_id: nil) }
   let(:convention_year_attribs) { invalid_attribs.merge(convention_id: convention.id) }
+  let(:second_attribs) { attributes_for(:convention_year, days: 7).merge(convention_id: convention.id) }
 
   describe "GET #index" do
     it "renders the :index view" do
@@ -87,15 +88,35 @@ describe ConventionYearsController do
 
   describe "PUT #update" do
     context "with valid attributes" do
-      it "redirects to the :index view"
-      it "modifies the convention year"
-      it "sets a successful flash message"
+      it "redirects to the :index view" do
+        put :update, id: id, convention_year: second_attribs
+        expect(response).to redirect_to convention_years_path
+      end
+      it "modifies the convention year" do
+        put :update, id: id, convention_year: second_attribs
+        convention_year.reload
+        expect(convention_year.days).to eq(7)
+      end
+      it "sets a successful flash message" do
+        put :update, id: id, convention_year: second_attribs
+        expect(flash[:success]).to be_present
+      end
     end
 
     context "with invalid attributes" do
-      it "redirects to the :edit view"
-      it "does not modify a convention year"
-      it "sets an error flash message"
+      it "render to the :edit view" do
+        put :update, id: id, convention_year: invalid_attribs
+        expect(response).to render_template :edit
+      end
+      it "does not modify a convention year" do
+        put :update, id: id, convention_year: invalid_attribs
+        convention_year.reload
+        expect(convention_year.convention_id).to_not be_nil
+      end
+      it "sets an error flash message" do
+        put :update, id:id, convention_year: invalid_attribs
+        expect(flash[:error]).to be_present
+      end
     end
   end
 
