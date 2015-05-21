@@ -3,6 +3,6 @@
 Conventions
 <ul>
   <% @conventions.each do |convention| %>
-    <li><%= convention.name %></li>
+    <li><%= link_to(convention.name, convention_path(convention)) %></li>
   <% end %>
 </ul>
