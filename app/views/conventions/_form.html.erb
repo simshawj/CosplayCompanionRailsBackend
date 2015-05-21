@@ -1,3 +1,15 @@
+<% if @convention.errors.any? %>
+  <div>
+    <h2><%= pluralize(@convention.errors.count, "error") %> prevented the convention from being saved:</h2>
+    <ul>
+      <% @convention.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
 <%= form_for @convention do |f| %>
   <%= f.label(:name, "Name") %>
   <%= f.text_field :name %>
