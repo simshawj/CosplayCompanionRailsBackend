@@ -1,3 +1,8 @@
 <%= link_to "Add a new convention", new_convention_path %>
 
 Conventions
+<ul>
+  <% @conventions.each do |convention| %>
+    <li><%= convention.name %></li>
+  <% end %>
+</ul>
