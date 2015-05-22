@@ -12,7 +12,8 @@ class ConventionYearsController < ApplicationController
     if @convention_year.save
       redirect_to convention_years_path, success: "Convention year successfully created"
     else
-      redirect_to new_convention_year_path, error: "Could not create convention year"
+      flash[:error] = "Could not create convention year"
+      render new_convention_year_path
     end
   end
 

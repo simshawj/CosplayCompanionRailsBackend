@@ -57,7 +57,7 @@ describe ConventionYearsController do
     context "with an invalid convention year" do
       it "redirects to the :new view" do
         post :create, convention_year: invalid_attribs
-        expect(response).to redirect_to new_convention_year_path
+        expect(response).to render_template "new"
       end
       it "does not save the convnetion year" do
         expect{post :create, convention_year: invalid_attribs}.not_to change{ConventionYear.count}
