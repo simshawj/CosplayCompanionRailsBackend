@@ -1,0 +1,5 @@
+<ul>
+  <% @photo_shoots.each do |photo_shoot| %>
+    <li><%= photo_shoot.series + " @ " + photo_shoot.convention_year.convention.name + " " + photo_shoot.convention_year.year.to_s + " @ " + photo_shoot.location %></li>
+  <% end %>
+</ul>
