@@ -69,6 +69,33 @@ describe ConventionYearsController do
     end
   end
 
+  describe "GET #show" do
+    context "with a valid id" do
+      it "renders the :show view" do
+        get :show, id: id
+        expect(response).to render_template :show
+      end
+      it "retrieves a convention year" do
+        get :show, id: id
+        expect(assigns(:convention_year)).to eq(convention_year)
+      end
+    end
+
+    context "with an invalid id" do
+      it "redirects to the :index view" do
+        convention_year.delete
+        get :show, id: id
+        expect(response).to redirect_to convention_years_path
+      end
+
+      it "sets flash error message" do
+        convention_year.delete
+        get :show, id: id
+        expect(flash[:error]).to be_present
+      end
+    end
+  end
+
   describe "GET #edit" do
     context "with a valid id" do
       it "renders the :edit view" do

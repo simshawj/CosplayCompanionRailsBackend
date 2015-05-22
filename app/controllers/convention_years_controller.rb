@@ -17,6 +17,14 @@ class ConventionYearsController < ApplicationController
     end
   end
 
+  def show
+    begin
+      @convention_year = ConventionYear.find(params[:id])
+    rescue
+      redirect_to convention_years_path, error: "Could not retrieve convention year"
+    end
+  end
+
   def edit
     begin
       @convention_year = ConventionYear.find(params[:id])
