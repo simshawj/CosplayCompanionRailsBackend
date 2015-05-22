@@ -17,6 +17,15 @@ describe ConventionYearsController do
       get :index
       expect(assigns(:convention_years)).to eq([convention_year])
     end
+    it "sorts by convention id then by year" do
+      con2 = create(:convention, name: "Con2")
+      conventionyear2 = create(:convention_year, convention: convention, year: 2000)
+      con2year1 = create(:convention_year, convention: con2, year: 2013)
+      con2year2 = create(:convention_year, convention: con2, year: 2010)
+      get :index
+      array = [conventionyear2, convention_year, con2year2, con2year1]
+      expect(assigns(:convention_years)).to eq(array)
+    end
   end
 
   describe "GET #new" do

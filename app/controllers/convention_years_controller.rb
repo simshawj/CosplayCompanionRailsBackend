@@ -1,6 +1,6 @@
 class ConventionYearsController < ApplicationController
   def index
-    @convention_years = ConventionYear.all
+    @convention_years = ConventionYear.all.order(:convention_id, :year)
   end
 
   def new
