@@ -60,5 +60,10 @@ describe ConventionYear do
 
   it { should have_many(:photo_shoots) }
 
+  it "returns the Convention name and year when full_listing is called" do
+    con_year = build_stubbed(:convention_year)
+    expect(con_year.full_listing).to eq("Test Convention 2015")
+  end
+
 end
 

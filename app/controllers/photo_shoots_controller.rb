@@ -8,11 +8,12 @@ class PhotoShootsController < ApplicationController
   end
 
   def create
-    photo_shoot = PhotoShoot.new(photo_shoot_params)
-    if photo_shoot.save
+    @photo_shoot = PhotoShoot.new(photo_shoot_params)
+    if @photo_shoot.save
       redirect_to photo_shoots_path, success: "Photo shoot successfully created"
     else
-      redirect_to new_photo_shoot_path, error: "Photo shoot could not be created"
+      flash[:error] = "Could not create photo shoot"
+      render new_photo_shoot_path
     end
   end
 

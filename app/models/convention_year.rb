@@ -15,4 +15,8 @@ class ConventionYear < ActiveRecord::Base
     end
   end
 
+  def full_listing
+    convention.name + " " + year.to_s
+  end
+
 end

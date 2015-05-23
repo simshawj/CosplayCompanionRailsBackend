@@ -1,6 +1,6 @@
 <% if @convention_year.errors.any? %>
   <div>
-    <h2><%= pluralize(@convention_year.errors.count, "error") %> prevented the convention from being saved:</h2>
+    <h2><%= pluralize(@convention_year.errors.count, "error") %> prevented the convention year from being saved:</h2>
     <ul>
       <% @convention_year.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

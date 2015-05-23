@@ -48,7 +48,7 @@ describe PhotoShootsController do
     context "with an invalid photo shoot" do
       it "redirects to the :new view" do
         post :create, photo_shoot: invalid_attribs
-        expect(response).to redirect_to new_photo_shoot_path
+        expect(response).to render_template :new
       end
       it "does not save a photo shoot" do
         expect{post :create, photo_shoot: invalid_attribs}.not_to change{PhotoShoot.count}

@@ -1,0 +1,26 @@
+<% if @photo_shoot.errors.any? %>
+  <div>
+    <h2><%= pluralize(@photo_shoot.errors.count, "error") %> prevented the photo shoot from being created:</h2>
+    <ul>
+      <% @photo_shoot.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= form_for @photo_shoot do |f| %>
+  <%= f.label(:convention_year_id, "Convention Year") %>
+  <%= f.collection_select(:convention_year_id, ConventionYear.all, :id, :full_listing ) %>
+  <%= f.label(:series, "Series") %>
+  <%= f.text_field(:series) %>
+  <%= f.label(:location, "Location") %>
+  <%= f.text_field(:location) %>
+  <%= f.label(:start, "Date and Time") %>
+  <%= f.datetime_select(:start, order: [:month, :day, :year, :hour, :minute], ampm: true) %>
+  <%= f.label(:description, "Description") %>
+  <%= f.text_area(:description) %>
+  <%= f.submit "Submit" %>
+<% end %>
+
