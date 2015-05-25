@@ -17,6 +17,14 @@ class PhotoShootsController < ApplicationController
     end
   end
 
+  def show
+    begin
+      @photo_shoot = PhotoShoot.find(params[:id])
+    rescue
+      redirect_to photo_shoots_path, error: "Couldnot find specified photo shoot"
+    end
+  end
+
   def edit
     begin
       @photo_shoot = PhotoShoot.find(params[:id])

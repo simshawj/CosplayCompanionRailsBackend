@@ -1,0 +1,5 @@
+<h2><%= @photo_shoot.series + " at " + @photo_shoot.convention_year.full_listing %></h2>
+<p>Location: <%= @photo_shoot.location %></p>
+<p>Starting: <%= @photo_shoot.start %></p>
+<p>Description: <%= @photo_shoot.description %></p>
+<%= link_to "Edit", edit_photo_shoot_path(@photo_shoot) %>

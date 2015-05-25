@@ -60,6 +60,33 @@ describe PhotoShootsController do
     end
   end
 
+  describe "GET #show" do
+    context "with a valid id" do
+      it "renders the :show view" do
+        get :show, id: id
+        expect(response).to render_template :show
+      end
+      it "retrieves a photo_shoot" do
+        get :show, id: id
+        expect(assigns(:photo_shoot)).to eq(photo_shoot)
+      end
+    end
+
+    context "with an invalid id" do
+      it "redirects to the :index view" do
+        photo_shoot.delete
+        get :show, id: id
+        expect(response).to redirect_to photo_shoots_path
+      end
+      it "sets flash error message" do
+        photo_shoot.delete
+        get :show, id: id
+        expect(flash[:error]).to be_present
+      end
+
+    end
+  end
+
   describe "GET #edit" do
     context "with a valid id" do
       it "renders the :edit view" do

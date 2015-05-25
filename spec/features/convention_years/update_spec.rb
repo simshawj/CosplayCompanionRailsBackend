@@ -16,4 +16,16 @@ describe "Convention year update" do
       expect(page).to have_content "2010"
     end
   end
+  
+  context "with invalid parameters" do
+    it "doese not update the convention year" do
+      visit("convention_years/" + con_year.id.to_s)
+      click_link "Edit"
+
+      fill_in "Year", with: ""
+      click_button "Submit"
+
+      expect(page).to have_content "Unable to update convention year"
+    end
+  end
 end
