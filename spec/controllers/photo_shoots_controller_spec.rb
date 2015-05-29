@@ -9,23 +9,21 @@ describe PhotoShootsController do
   let(:id) { photo_shoot.id }
 
   describe "GET #index" do
+    before(:each) { get :index }
     it "renders the :index view" do 
-      get :index
       expect(response).to render_template :index
     end
     it "creates a list of photoshoots" do
-      get :index
       expect(assigns(:photo_shoots)).to eq([photo_shoot])
     end
   end
 
   describe "GET #new" do
+    before(:each) { get :new }
     it "renders the :new template" do
-      get :new
       expect(response).to render_template :new
     end
     it "creates a new photo shoot" do
-      get :new
       expect(assigns(:photo_shoot)).to be_a_new(PhotoShoot)
     end
   end
@@ -62,25 +60,24 @@ describe PhotoShootsController do
 
   describe "GET #show" do
     context "with a valid id" do
+      before(:each) { get :show, id: id }
       it "renders the :show view" do
-        get :show, id: id
         expect(response).to render_template :show
       end
       it "retrieves a photo_shoot" do
-        get :show, id: id
         expect(assigns(:photo_shoot)).to eq(photo_shoot)
       end
     end
 
     context "with an invalid id" do
-      it "redirects to the :index view" do
+      before(:each) do
         photo_shoot.delete
         get :show, id: id
+      end
+      it "redirects to the :index view" do
         expect(response).to redirect_to photo_shoots_path
       end
       it "sets flash error message" do
-        photo_shoot.delete
-        get :show, id: id
         expect(flash[:error]).to be_present
       end
 
@@ -89,25 +86,24 @@ describe PhotoShootsController do
 
   describe "GET #edit" do
     context "with a valid id" do
+      before(:each) { get :edit, id: id }
       it "renders the :edit view" do
-        get :edit, id: id
         expect(response).to render_template :edit
       end
       it "retrieves a photo shoot" do
-        get :edit, id: id
         expect(assigns(:photo_shoot)).to eq(photo_shoot)
       end
     end
 
     context "with an invalid id" do
-      it "redirects to the :index view" do
+      before(:each) do
         photo_shoot.delete
         get :edit, id: id
+      end
+      it "redirects to the :index view" do
         expect(response).to redirect_to photo_shoots_path
       end
       it "sets a flash error message" do
-        photo_shoot.delete
-        get :edit, id: id
         expect(flash[:error]).to be_present
       end
     end
