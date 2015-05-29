@@ -9,23 +9,21 @@ describe ConventionsController do
   let(:second_valid_convention_attribs) { FactoryGirl.attributes_for(:convention, name: second_valid_convention_name) }
 
   describe "GET #index" do
+    before(:each) { get :index }
     it "renders the :index view" do
-      get :index
       expect(response).to render_template :index
     end
     it "creates a list of Conventions" do
-      get :index
       expect(assigns(:conventions)).to eq([convention])
     end
   end
 
   describe "GET #new" do
+    before(:each) { get :new }
     it "renders the :new view" do
-      get :new
       expect(response).to render_template :new
     end
     it "creates a new Convention" do
-      get :new
       expect(assigns(:convention)).to be_a_new(Convention)
     end
   end
@@ -62,25 +60,24 @@ describe ConventionsController do
 
   describe "GET #show" do
     context "with a valid id" do
+      before(:each) { get :show, id: id }
       it "renders the :show view" do
-        get :show, id: id
         expect(response).to render_template :show
       end
       it "retrieves a Convention" do
-        get :show, id: id
         expect(assigns(:convention)).to eq(convention)
       end
     end
 
     context "with an invalid id" do
-      it "redirects to the :index view" do
+      before(:each) do
         convention.delete
         get :show, id: id
+      end
+      it "redirects to the :index view" do
         expect(response).to redirect_to action: "index"
       end
       it "sets flash error message" do
-        convention.delete
-        get :show, id: id
         expect(flash[:error]).to be_present
       end
     end
@@ -88,24 +85,24 @@ describe ConventionsController do
 
   describe "GET #edit" do
     context "with a valid id" do
+      before(:each) { get :edit, id: id }
       it "renders the :edit iview" do
-        get :edit, id: id
         expect(response).to render_template :edit
       end
       it "retrieves a Convention" do
-        get :edit, id: id
         expect(assigns(:convention)).to eq(convention)
       end
     end
+
     context "with an invalid id" do
-      it "redirects to the :index view" do
+      before(:each) do
         convention.delete
         get :edit, id: id
+      end
+      it "redirects to the :index view" do
         expect(response).to redirect_to action: "index"
       end
       it "sets flash error message" do
-        convention.delete
-        get :edit, id: id
         expect(flash[:error]).to be_present
       end
     end
