@@ -29,12 +29,11 @@ describe ConventionYearsController do
   end
 
   describe "GET #new" do
+    before(:each) { get :new }
     it "renders the :new view" do
-      get :new
       expect(response).to render_template :new
     end
     it "creates a new convention year" do
-      get :new
       expect(assigns(:convention_year)).to be_a_new(ConventionYear)
     end
   end
@@ -71,26 +70,25 @@ describe ConventionYearsController do
 
   describe "GET #show" do
     context "with a valid id" do
+      before(:each) { get :show, id: id }
       it "renders the :show view" do
-        get :show, id: id
         expect(response).to render_template :show
       end
       it "retrieves a convention year" do
-        get :show, id: id
         expect(assigns(:convention_year)).to eq(convention_year)
       end
     end
 
     context "with an invalid id" do
-      it "redirects to the :index view" do
+      before(:each) do
         convention_year.delete
         get :show, id: id
+      end
+      it "redirects to the :index view" do
         expect(response).to redirect_to convention_years_path
       end
 
       it "sets flash error message" do
-        convention_year.delete
-        get :show, id: id
         expect(flash[:error]).to be_present
       end
     end
@@ -98,25 +96,24 @@ describe ConventionYearsController do
 
   describe "GET #edit" do
     context "with a valid id" do
+      before(:each) { get :edit, id: id }
       it "renders the :edit view" do
-        get :edit, id: id
         expect(response).to render_template :edit
       end
       it "retrieves a convention year" do
-        get :edit, id: id
         expect(assigns(:convention_year)).to eq(convention_year)
       end
     end
 
     context "with an invalid id" do
-      it "redirects to the :index view" do
+      before(:each) do
         convention_year.delete
         get :edit, id: id
+      end
+      it "redirects to the :index view" do
         expect(response).to redirect_to convention_years_path
       end
       it "sets flash error message" do
-        convention_year.delete
-        get :edit, id: id
         expect(flash[:error]).to be_present
       end
     end
