@@ -3,7 +3,7 @@ FactoryGirl.define do
     series "A Test Series"
     start DateTime.now.noon
     location "End of Time"
-    association :convention_year, factory: :convention_year, strategy: :create
+    convention_year
     
   end
 
