@@ -14,8 +14,12 @@
 
   <body>
 
-    <%= render "flash" %>
-    <%= yield %>
-
+    <%= render "topbar" %>
+    <div class="row content">
+      <div class="small-12 columns">
+        <%= render "flash" %>
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
