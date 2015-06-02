@@ -51,9 +51,9 @@ describe PhotoShootsController do
       it "does not save a photo shoot" do
         expect{post :create, photo_shoot: invalid_attribs}.not_to change{PhotoShoot.count}
       end
-      it "sets a flash :error message" do
+      it "sets a flash :alert message" do
         post :create, photo_shoot: invalid_attribs
-        expect(flash[:error]).to be_present
+        expect(flash[:alert]).to be_present
       end
     end
   end
@@ -77,8 +77,8 @@ describe PhotoShootsController do
       it "redirects to the :index view" do
         expect(response).to redirect_to photo_shoots_path
       end
-      it "sets flash error message" do
-        expect(flash[:error]).to be_present
+      it "sets flash alert message" do
+        expect(flash[:alert]).to be_present
       end
 
     end
@@ -103,8 +103,8 @@ describe PhotoShootsController do
       it "redirects to the :index view" do
         expect(response).to redirect_to photo_shoots_path
       end
-      it "sets a flash error message" do
-        expect(flash[:error]).to be_present
+      it "sets a flash alert message" do
+        expect(flash[:alert]).to be_present
       end
     end
   end
@@ -136,9 +136,9 @@ describe PhotoShootsController do
         photo_shoot.reload
         expect(photo_shoot.convention_year_id).not_to be_nil
       end
-      it "sets an error flash message" do
+      it "sets an alert flash message" do
         put :update, id: id, photo_shoot: invalid_attribs
-        expect(flash[:error]).to be_present
+        expect(flash[:alert]).to be_present
       end
     end
   end

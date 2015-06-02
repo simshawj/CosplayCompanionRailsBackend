@@ -12,7 +12,7 @@ class ConventionsController < ApplicationController
     if @convention.save
       redirect_to conventions_path, success: "Convention successfully created"
     else
-      flash[:error] = "There was an error creating the convention"
+      flash[:alert] = "There was an error creating the convention"
       render new_convention_path
     end
   end
@@ -21,7 +21,7 @@ class ConventionsController < ApplicationController
     begin
       @convention = Convention.find(params[:id]) 
     rescue
-      redirect_to conventions_path, error: "Could not retrieve convention information"
+      redirect_to conventions_path, alert: "Could not retrieve convention information"
     end
   end
 
@@ -29,7 +29,7 @@ class ConventionsController < ApplicationController
     begin
       @convention = Convention.find(params[:id])
     rescue
-      redirect_to conventions_path, error: "Could not retrieve convention to edit"
+      redirect_to conventions_path, alert: "Could not retrieve convention to edit"
     end
   end
 
@@ -38,7 +38,7 @@ class ConventionsController < ApplicationController
     if @convention.update(convention_params)
       redirect_to conventions_path, success: "Convention updated"
     else
-      flash[:error] = "Failed to update convention"
+      flash[:alert] = "Failed to update convention"
       render action: "edit"
     end
   end

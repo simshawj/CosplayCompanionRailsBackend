@@ -51,9 +51,9 @@ describe ConventionsController do
       it "does not save a Convention" do
         expect{post :create, convention: invalid_convention_attribs}.not_to change{Convention.count}
       end
-      it "sets flash error message" do
+      it "sets flash alert message" do
         post :create, convention: invalid_convention_attribs
-        expect(flash[:error]).to be_present
+        expect(flash[:alert]).to be_present
       end
     end
   end
@@ -77,8 +77,8 @@ describe ConventionsController do
       it "redirects to the :index view" do
         expect(response).to redirect_to action: "index"
       end
-      it "sets flash error message" do
-        expect(flash[:error]).to be_present
+      it "sets flash alert message" do
+        expect(flash[:alert]).to be_present
       end
     end
   end
@@ -102,8 +102,8 @@ describe ConventionsController do
       it "redirects to the :index view" do
         expect(response).to redirect_to action: "index"
       end
-      it "sets flash error message" do
-        expect(flash[:error]).to be_present
+      it "sets flash alert message" do
+        expect(flash[:alert]).to be_present
       end
     end
   end
@@ -135,9 +135,9 @@ describe ConventionsController do
         convention.reload
         expect(convention.name).to eq("Test Convention")
       end
-      it "sets an error flash message" do
+      it "sets an alert flash message" do
         put :update, id:id, convention: invalid_convention_attribs
-        expect(flash[:error]).to be_present
+        expect(flash[:alert]).to be_present
       end
     end
   end

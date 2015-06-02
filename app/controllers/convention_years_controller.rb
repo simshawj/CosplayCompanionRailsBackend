@@ -12,7 +12,7 @@ class ConventionYearsController < ApplicationController
     if @convention_year.save
       redirect_to convention_years_path, success: "Convention year successfully created"
     else
-      flash[:error] = "Could not create convention year"
+      flash[:alert] = "Could not create convention year"
       render new_convention_year_path
     end
   end
@@ -21,7 +21,7 @@ class ConventionYearsController < ApplicationController
     begin
       @convention_year = ConventionYear.find(params[:id])
     rescue
-      redirect_to convention_years_path, error: "Could not retrieve convention year"
+      redirect_to convention_years_path, alert: "Could not retrieve convention year"
     end
   end
 
@@ -29,7 +29,7 @@ class ConventionYearsController < ApplicationController
     begin
       @convention_year = ConventionYear.find(params[:id])
     rescue
-      redirect_to convention_years_path, error: "Could not retrieve convention year to edit"
+      redirect_to convention_years_path, alert: "Could not retrieve convention year to edit"
     end
   end
 
@@ -38,7 +38,7 @@ class ConventionYearsController < ApplicationController
     if @convention_year.update(convention_year_params)
       redirect_to convention_years_path, success: "Convention year successfully updated"
     else
-      flash[:error] = "Unable to update convention year"
+      flash[:alert] = "Unable to update convention year"
       render :edit
     end
   end

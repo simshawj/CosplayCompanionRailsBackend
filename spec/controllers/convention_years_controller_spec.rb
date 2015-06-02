@@ -61,9 +61,9 @@ describe ConventionYearsController do
       it "does not save the convnetion year" do
         expect{post :create, convention_year: invalid_attribs}.not_to change{ConventionYear.count}
       end
-      it "sets flash error message" do
+      it "sets flash alert message" do
         post :create, convention_year: invalid_attribs
-        expect(flash[:error]).to be_present
+        expect(flash[:alert]).to be_present
       end
     end
   end
@@ -88,8 +88,8 @@ describe ConventionYearsController do
         expect(response).to redirect_to convention_years_path
       end
 
-      it "sets flash error message" do
-        expect(flash[:error]).to be_present
+      it "sets flash alert message" do
+        expect(flash[:alert]).to be_present
       end
     end
   end
@@ -113,8 +113,8 @@ describe ConventionYearsController do
       it "redirects to the :index view" do
         expect(response).to redirect_to convention_years_path
       end
-      it "sets flash error message" do
-        expect(flash[:error]).to be_present
+      it "sets flash alert message" do
+        expect(flash[:alert]).to be_present
       end
     end
   end
@@ -146,9 +146,9 @@ describe ConventionYearsController do
         convention_year.reload
         expect(convention_year.convention_id).to_not be_nil
       end
-      it "sets an error flash message" do
+      it "sets an alert flash message" do
         put :update, id:id, convention_year: invalid_attribs
-        expect(flash[:error]).to be_present
+        expect(flash[:alert]).to be_present
       end
     end
   end

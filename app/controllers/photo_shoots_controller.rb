@@ -12,7 +12,7 @@ class PhotoShootsController < ApplicationController
     if @photo_shoot.save
       redirect_to photo_shoots_path, success: "Photo shoot successfully created"
     else
-      flash[:error] = "Could not create photo shoot"
+      flash[:alert] = "Could not create photo shoot"
       render new_photo_shoot_path
     end
   end
@@ -21,7 +21,7 @@ class PhotoShootsController < ApplicationController
     begin
       @photo_shoot = PhotoShoot.find(params[:id])
     rescue
-      redirect_to photo_shoots_path, error: "Couldnot find specified photo shoot"
+      redirect_to photo_shoots_path, alert: "Couldnot find specified photo shoot"
     end
   end
 
@@ -29,7 +29,7 @@ class PhotoShootsController < ApplicationController
     begin
       @photo_shoot = PhotoShoot.find(params[:id])
     rescue
-      redirect_to photo_shoots_path, error: "Could not find specified photo shoot"
+      redirect_to photo_shoots_path, alert: "Could not find specified photo shoot"
     end
   end
 
@@ -38,7 +38,7 @@ class PhotoShootsController < ApplicationController
     if @photo_shoot.update(photo_shoot_params)
       redirect_to photo_shoots_path, success: "Photo shoot successfully updated"
     else
-      flash[:error] = "Could not update photo shoot"
+      flash[:alert] = "Could not update photo shoot"
       render :edit
     end
   end
