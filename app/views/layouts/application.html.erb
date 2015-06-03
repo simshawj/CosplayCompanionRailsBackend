@@ -7,8 +7,6 @@
     <title><%= content_for?(:title) ? yield(:title) : "Cosplay Companion" %></title>
 
     <%= stylesheet_link_tag    "application", 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag "vendor/modernizr", 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
 
@@ -21,5 +19,8 @@
         <%= yield %>
       </div>
     </div>
+
+    <%= javascript_include_tag "vendor/modernizr", 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
   </body>
 </html>
