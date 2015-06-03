@@ -1,6 +1,12 @@
-<%= link_to "Add a new convention", new_convention_path %>
+<div class="row" data-equalizer>
+  <div class="small-8 columns" data-equalizer-watch>
+    <h1>Conventions</h1>
+  </div>
+  <div class="small-4 columns" data-equalizer-watch>
+    <%= link_to "Add a new convention", new_convention_path, class: "button tiny round right new-item" %>
+  </div>
+</div>
 
-Conventions
 <ul>
   <% @conventions.each do |convention| %>
     <li><%= link_to(convention.name, convention_path(convention)) %></li>
