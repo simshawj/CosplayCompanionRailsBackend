@@ -16,6 +16,9 @@ describe ConventionsController do
     it "creates a list of Conventions" do
       expect(assigns(:conventions)).to eq([convention])
     end
+    it "creates a new Convention" do
+      expect(assigns(:convention)).to be_a_new(Convention)
+    end
   end
 
   describe "GET #new" do
