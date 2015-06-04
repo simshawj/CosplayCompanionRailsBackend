@@ -12,3 +12,7 @@
     <li><%= link_to(convention.name, convention_path(convention)) %></li>
   <% end %>
 </ul>
+
+<div id="newConModal" class="reveal-modal" data-reveal aria-labelledby="New Convention" aria-hidden="true" role="dialog">
+  <%= render "form" %>  
+</div>

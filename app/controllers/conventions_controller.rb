@@ -1,6 +1,7 @@
 class ConventionsController < ApplicationController
   def index
     @conventions = Convention.all
+    @convention = Convention.new
   end
 
   def new
