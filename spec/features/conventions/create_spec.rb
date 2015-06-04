@@ -39,8 +39,6 @@ describe "Convention creation" do
   end
 
   context "with Javascript", js: true do
-    #before(:each) { DatabaseCleaner.start }
-    #after(:each) { DatabaseCleaner.clean }
     it "displays a modal with the form" do
       goto_form
       expect(page).to have_selector("#newConModal", visible: true)
