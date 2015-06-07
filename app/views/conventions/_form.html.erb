@@ -11,6 +11,12 @@
   </div>
 <% end %>
 
+<% if remote %>
+  <h2 id="modalTitle">Add a new convention</h2>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+<% else %>
+  <h2>Add a new convention</h2>
+<% end %>
 
 <%= form_for @convention, remote: remote do |f| %>
   <%= f.label(:name, "Name") %>
