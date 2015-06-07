@@ -1,7 +1,6 @@
 class ConventionsController < ApplicationController
   def index
-    @conventions = Convention.all
-    @convention = Convention.new
+    get_all_conventions
   end
 
   def new
@@ -11,9 +10,18 @@ class ConventionsController < ApplicationController
   def create
     @convention = Convention.new(convention_params)
     if @convention.save
-      redirect_to conventions_path, success: "Convention successfully created"
+      respond_to do |format|
+        format.html { redirect_to conventions_path, success: "Convention successfully created" }
+        format.js do
+          get_all_conventions
+          flash.now[:success] = "Convention successfully created"
+        end
+      end
     else
-      flash[:alert] = "There was an error creating the convention"
+      respond_to do |format|
+        format.html { flash[:alert] = "There was an error creating the convention" }
+        format.js {}
+      end
       render new_convention_path
     end
   end
@@ -46,5 +54,10 @@ class ConventionsController < ApplicationController
 
   def convention_params
     params.require(:convention).permit(:name, :description)
+  end
+
+  private
+  def get_all_conventions
+    @conventions = Convention.all
   end
 end

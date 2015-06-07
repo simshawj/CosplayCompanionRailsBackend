@@ -1,0 +1,5 @@
+<ul>
+    <% @conventions.each do |convention| %>
+      <li><%= link_to(convention.name, convention_path(convention)) %></li>
+    <% end %>
+</ul>

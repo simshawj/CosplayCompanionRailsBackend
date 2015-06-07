@@ -15,7 +15,9 @@
     <%= render "topbar" %>
     <div class="row main-content">
       <div class="small-12 columns">
-        <%= render "flash" %>
+        <div id="flash-messages">
+          <%= render "flash" %>
+        </div>
         <%= yield %>
       </div>
     </div>

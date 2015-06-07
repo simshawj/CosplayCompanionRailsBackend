@@ -1,3 +1,5 @@
+<% remote ||= false %>
+
 <% if @convention.errors.any? %>
   <div>
     <h2><%= pluralize(@convention.errors.count, "error") %> prevented the convention from being saved:</h2>
@@ -10,7 +12,7 @@
 <% end %>
 
 
-<%= form_for @convention do |f| %>
+<%= form_for @convention, remote: remote do |f| %>
   <%= f.label(:name, "Name") %>
   <%= f.text_field :name %>
   <%= f.label(:description, "Description") %>

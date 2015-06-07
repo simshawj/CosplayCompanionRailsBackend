@@ -16,15 +16,22 @@ describe ConventionsController do
     it "creates a list of Conventions" do
       expect(assigns(:conventions)).to eq([convention])
     end
-    it "creates a new Convention" do
-      expect(assigns(:convention)).to be_a_new(Convention)
-    end
   end
 
   describe "GET #new" do
     before(:each) { get :new }
     it "renders the :new view" do
       expect(response).to render_template :new
+    end
+    it "creates a new Convention" do
+      expect(assigns(:convention)).to be_a_new(Convention)
+    end
+  end
+
+  describe "GET #new.js" do
+    before(:each) { xhr :get, :new, format: :js }
+    it "returns the javascript view" do
+      expect(response.content_type).to eq(Mime::JS)
     end
     it "creates a new Convention" do
       expect(assigns(:convention)).to be_a_new(Convention)
@@ -58,6 +65,36 @@ describe ConventionsController do
         post :create, convention: invalid_convention_attribs
         expect(flash[:alert]).to be_present
       end
+    end
+  end
+
+  describe "POST #create.js" do
+    context "with a valid convention" do
+      it "renders a JS response" do
+        xhr :post, :create, convention: convention_attribs, format: :js
+        expect(response.content_type).to eq(Mime::JS)
+      end
+      it "saves a convention" do
+        expect{ xhr :post, :create, convention: convention_attribs, format: :js }.to change{Convention.count}.by(1)
+      end
+      it "sets flash success message" do
+        xhr :post, :create, convention: convention_attribs, format: :js
+        expect(flash.now[:success]).to be_present
+      end
+    end
+
+    context "with an invalid convention" do
+      it "renders a JS response" do
+        xhr :post, :create, convention: invalid_convention_attribs, format: :js
+        expect(response.content_type).to eq(Mime::JS)
+      end
+      it "does not save a convention" do
+        expect{ xhr :post, :create, convention: invalid_convention_attribs, format: :js }.not_to change{Convention.count}
+      end
+      #it "sets flash error message" do
+      #  xhr :post, :create, convention: invalid_convention_attribs, format: :js
+      #  expect(flash.now[:alert]).to be_present
+      #end
     end
   end
 
