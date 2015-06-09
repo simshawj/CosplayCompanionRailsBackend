@@ -3,7 +3,7 @@
     <li class="convention-list-item" id="<%= convention.id_safe_name %>">
       <%= link_to convention.name, convention_path(convention) %>
       <ul class="inline-list">
-        <li><%= link_to "Edit", edit_convention_path(convention), remote: true %>
+        <li><%= link_to "Edit", edit_convention_path(convention), remote: true %></li>
       </ul>
     </li>
   <% end %>
