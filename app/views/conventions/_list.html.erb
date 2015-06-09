@@ -1,5 +1,10 @@
 <ul>
-    <% @conventions.each do |convention| %>
-      <li><%= link_to(convention.name, convention_path(convention)) %></li>
-    <% end %>
+  <% @conventions.each do |convention| %>
+    <li id="<%= convention.id_safe_name %>">
+      <%= link_to convention.name, convention_path(convention) %>
+      <ul class="inline-list">
+        <li><%= link_to "Edit", edit_convention_path(convention), remote: true %>
+      </ul>
+    </li>
+  <% end %>
 </ul>

@@ -45,9 +45,18 @@ class ConventionsController < ApplicationController
   def update
     @convention = Convention.find(params[:id])
     if @convention.update(convention_params)
-      redirect_to conventions_path, success: "Convention updated"
+      respond_to do |format|
+        format.html { redirect_to conventions_path, success: "Convention updated" }
+        format.js do
+          get_all_conventions
+          flash.now[:success] = "Convention updated"
+        end
+      end
     else
-      flash[:alert] = "Failed to update convention"
+      respond_to do |format|
+        format.html { flash[:alert] = "Failed to update convention" }
+        format.js {}
+      end
       render action: "edit"
     end
   end

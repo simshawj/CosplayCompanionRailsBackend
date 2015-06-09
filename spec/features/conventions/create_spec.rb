@@ -41,11 +41,11 @@ describe "Convention creation" do
   context "with Javascript", js: true do
     it "displays a modal with the form" do
       goto_form
-      expect(page).to have_selector("#newConModal", visible: true)
+      expect(page).to have_selector("#modifyConModal", visible: true)
     end
     it "creates a new convention" do
       goto_form
-      within("#newConModal") do
+      within("#modifyConModal") do
         fill_in_form
       end
       check_positive_result
