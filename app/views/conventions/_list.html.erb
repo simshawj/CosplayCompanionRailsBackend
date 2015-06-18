@@ -2,14 +2,18 @@
   <% @conventions.each do |convention| %>
     <li class="convention-list-item" id="<%= convention.id_safe_name %>">
       <div class="row">
-        <div class="small-8 medium-5 columns">
-          <img src="http://placehold.it/100x100" class="convention-logo" alt="<%= convention.name %>'s Logo">
-          <%= link_to convention.name, convention_path(convention) %>
-          <ul class="inline-list">
-            <li><%= link_to "Edit", edit_convention_path(convention), remote: true %></li>
-          </ul>
+        <div class="small-7 columns convention-info">
+          <div>
+            <img src="http://placehold.it/100x100" class="convention-logo" alt="<%= convention.name %>'s Logo">
+          </div>
+          <div class="convention-info">
+            <%= link_to convention.name, convention_path(convention), title: convention.name %>
+            <ul class="inline-list options">
+              <li><%= link_to "Edit", edit_convention_path(convention), remote: true %></li>
+            </ul>
+          </div>
         </div>
-        <div class="small-4 medium-7 columns">
+        <div class="small-5 columns">
           Con Years
         </div>
       </div>
