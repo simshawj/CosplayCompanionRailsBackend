@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '2.2.2'
 
 gem 'rails', '4.2.1'
 
@@ -31,3 +31,6 @@ group :test do
   gem 'shoulda-matchers'
 end
 
+group :production do
+  gem 'rails_12factor'
+end
