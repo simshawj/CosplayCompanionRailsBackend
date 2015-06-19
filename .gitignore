@@ -12,7 +12,4 @@
 !/log/.keep
 /tmp
 
-#Ignore secret files
-secrets.yml
-
 *.swp
