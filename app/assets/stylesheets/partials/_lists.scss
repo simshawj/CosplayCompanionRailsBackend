@@ -5,7 +5,6 @@
 
 .convention-list-item {
   list-style-type: none;
-  padding-bottom: 20px;
 }
 
 .convention-logo {
@@ -18,9 +17,11 @@
 
 .convention-info {
   height: 100px;
+  margin-bottom: 25px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 1.25em;
 }
 
 .options {
