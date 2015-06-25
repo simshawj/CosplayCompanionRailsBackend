@@ -13,8 +13,16 @@
             </ul>
           </div>
         </div>
-        <div class="small-5 columns">
-          Con Years
+        <div class="small-5 columns con-years">
+          <% if convention.convention_years.empty? %>
+            <p>No conventions yet</p>
+          <% else %>
+            <ul class="inline-list">
+              <% convention.convention_years.each do |year| %>
+                <li><%= link_to year.year, convention_year_path(year), title: year %></li>
+              <% end %>
+            </ul>
+          <% end %>
         </div>
         <hr />
       </div>
