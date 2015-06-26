@@ -35,6 +35,7 @@ class ConventionsController < ApplicationController
   end
 
   def edit
+    session[:return_to] ||= request.referer
     begin
       @convention = Convention.find(params[:id])
     rescue
@@ -46,7 +47,7 @@ class ConventionsController < ApplicationController
     @convention = Convention.find(params[:id])
     if @convention.update(convention_params)
       respond_to do |format|
-        format.html { redirect_to conventions_path, success: "Convention updated" }
+        format.html { redirect_to session.delete(:return_to), success: "Convention updated" }
         format.js do
           get_all_conventions
           flash.now[:success] = "Convention updated"
