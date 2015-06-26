@@ -150,6 +150,7 @@ describe ConventionsController do
 
   describe "PUT #update" do
     context "with valid attributes" do
+      before(:each) { session[:return_to] = conventions_path }
       it "redirects to the :index view" do
         put :update, id: id, convention: convention_attribs
         expect(response).to redirect_to action: "index"
