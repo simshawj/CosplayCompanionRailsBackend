@@ -4,7 +4,7 @@
 }
 
 .new-item {
-  top: 33%;
+  top: 30%;
   margin-right: 15px;
 }
 
@@ -23,7 +23,6 @@
 .convention-info {
   height: 100px;
   margin-bottom: 25px;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 1.25em;
@@ -39,4 +38,5 @@
 .con-years {
   height: 100px;
   margin-bottom: 25px;
+  overflow: hidden;
 }
