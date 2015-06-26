@@ -1,3 +1,21 @@
-<h2><%= @convention.name %></h2>
-<p><%= @convention.description %></p>
-<%= link_to "Edit", edit_convention_path(@convention) %>
+<div id="header" class="row">
+  <div class="small-12 columns">
+    <h1><%= @convention.name %></h1>
+    <%= link_to "Edit", edit_convention_path(@convention), class: "inline", remote: true %>
+  </div>
+</div>
+
+<div id="description" class="row">
+  <div class="small-12 columns">
+    <p><%= @convention.description %></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 medium-9 columns">
+    <%= render "year_list" %>
+  </div>
+  <div class="show-for-medium-up medium 3 columns">
+    <%= render "sidebar" %>
+  </div>
+</div>
