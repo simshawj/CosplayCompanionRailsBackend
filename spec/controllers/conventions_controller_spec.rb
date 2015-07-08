@@ -91,10 +91,6 @@ describe ConventionsController do
       it "does not save a convention" do
         expect{ xhr :post, :create, convention: invalid_convention_attribs, format: :js }.not_to change{Convention.count}
       end
-      #it "sets flash error message" do
-      #  xhr :post, :create, convention: invalid_convention_attribs, format: :js
-      #  expect(flash.now[:alert]).to be_present
-      #end
     end
   end
 
@@ -147,6 +143,32 @@ describe ConventionsController do
       end
     end
   end
+
+  describe "GET #edit.js" do
+    context "with a valid id" do
+      before(:each) { xhr :get, :edit, id: id, format: :js }
+      it "reply with JavaScript" do
+        expect(response.content_type).to eq(Mime::JS)
+      end
+      it "retrieves a Convention" do
+        expect(assigns(:convention)).to eq(convention)
+      end
+    end
+
+    context "with an invalid id" do
+      before(:each) do
+        convention.delete
+        xhr :get, :edit, id: id, format: :js
+      end
+      it "redirects to the :index view" do
+        expect(response).to redirect_to action: "index"
+      end
+      it "sets flash alert message" do
+        expect(flash[:alert]).to be_present
+      end
+    end
+  end
+
 
   describe "PUT #update" do
     context "with valid attributes" do
