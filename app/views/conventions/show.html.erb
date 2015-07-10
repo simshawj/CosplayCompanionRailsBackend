@@ -1,7 +1,7 @@
 <div id="header" class="row">
   <div class="small-12 columns">
     <h1><%= @convention.name %></h1>
-    <%= link_to "Edit", edit_convention_path(@convention), class: "inline", remote: true %>
+    <%= link_to "Edit", edit_convention_path(@convention), remote: true %>
   </div>
 </div>
 
@@ -15,7 +15,7 @@
   <div class="small-12 medium-9 columns">
     <%= render "year_list" %>
   </div>
-  <div class="show-for-medium-up medium 3 columns">
+  <div class="show-for-medium-up medium-3 columns">
     <%= render "sidebar" %>
   </div>
 </div>
