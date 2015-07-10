@@ -2,9 +2,7 @@
   <div class="small-12 columns">
     <% @convention.convention_years.each do |year| %>
       <div class="row">
-        <div class="small-12 columns">
-          <p>Something</p>
-        </div>
+        <%= render "year_item", year: year %>
       </div>
     <% end %>
   </div>
