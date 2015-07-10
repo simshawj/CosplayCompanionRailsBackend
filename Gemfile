@@ -3,7 +3,6 @@ ruby '2.2.2'
 
 gem 'rails', '4.2.1'
 
-gem 'coffee-rails'
 gem 'foundation-rails'
 gem 'jbuilder'
 gem 'jquery-rails'
