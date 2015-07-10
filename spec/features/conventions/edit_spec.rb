@@ -64,9 +64,6 @@ describe "updating conventions" do
 
     context "with javascript enabled", js: true do
       before(:each) { visit_edit_convention selector: id_string, con: con, address: "/conventions" }
-      it "brings up a modal" do
-        expect(page).to have_selector("#modifyConModal", visible: true)
-      end
       it "updates the convention with valid attributes" do
         within "#modifyConModal" do
           fill_in_edit_con_form con: con, name: "A changed convention"
