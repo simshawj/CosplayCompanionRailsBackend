@@ -1,8 +1,17 @@
 <div class="row">
   <div class="small-12 columns">
-    <% @convention.convention_years.each do |year| %>
+    <% @convention.convention_years.in_groups_of(3, false) do |row| %>
       <div class="row">
-        <%= render "year_item", year: year %>
+        <% row.each_with_index do |year, index| %>
+          <div class=<% finish_year_row(index, row) %>>
+            <!--
+              Year
+              Date Range
+              Location
+            -->
+            <%= link_to year.year, convention_year_path(year), title: year.year %>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>
