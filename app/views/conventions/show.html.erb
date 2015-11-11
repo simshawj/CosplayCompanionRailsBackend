@@ -12,6 +12,12 @@
 </div>
 
 <div class="row">
+  <div class="small-4 columns right end">
+    <%= link_to "Add a new year", new_convention_year_path, class: "button tiny round right new-item", remote:true %>
+  </div>
+</div>
+
+<div class="row">
   <div class="small-12 medium-9 columns">
     <%= render "year_list" %>
   </div>

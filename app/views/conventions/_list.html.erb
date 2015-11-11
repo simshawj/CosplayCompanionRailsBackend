@@ -15,7 +15,7 @@
         </div>
         <div class="small-5 columns con-years">
           <% if convention.convention_years.empty? %>
-            <p>No conventions yet</p>
+            <%= link_to "Add a year", new_convention_year_path, remote: true %>
           <% else %>
             <ul class="inline-list">
               <% convention.convention_years.each do |year| %>
