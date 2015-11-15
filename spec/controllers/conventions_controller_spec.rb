@@ -9,12 +9,24 @@ describe ConventionsController do
   let(:second_valid_convention_attribs) { FactoryGirl.attributes_for(:convention, name: second_valid_convention_name) }
 
   describe "GET #index" do
-    before(:each) { get :index }
-    it "renders the :index view" do
-      expect(response).to render_template :index
+    context "as html" do
+      before(:each) { get :index }
+      it "renders the :index view" do
+        expect(response).to render_template :index
+      end
+      it "creates a list of Conventions" do
+        expect(assigns(:conventions)).to eq([convention])
+      end
     end
-    it "creates a list of Conventions" do
-      expect(assigns(:conventions)).to eq([convention])
+    context "as json" do
+      before(:each) { 
+        convention
+        get :index, :format => :json 
+      }
+      it "responds with the convention as json" do
+        expect(response.body).to eq([convention].to_json)
+      end
+
     end
   end
 

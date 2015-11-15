@@ -1,6 +1,12 @@
 class ConventionsController < ApplicationController
   def index
     get_all_conventions
+    respond_to do |format|
+      format.html {}
+      format.json {
+        render json: @conventions
+      }
+    end
   end
 
   def new
