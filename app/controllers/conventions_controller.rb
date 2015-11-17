@@ -78,4 +78,12 @@ class ConventionsController < ApplicationController
   def get_all_conventions
     @conventions = Convention.all
   end
+
+  def verified_request?
+    if request.content_type == "application/json"
+      true
+    else
+      super()
+    end
+  end
 end
