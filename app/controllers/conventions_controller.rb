@@ -29,7 +29,7 @@ class ConventionsController < ApplicationController
           render new_convention_path
         end
         format.js { render new_convention_path }
-        format.json { render json: { error: "Unable to create convention"}, status: 422 }
+        format.json { render json: { errors: @convention.errors.full_messages }, status: 422 }
       end
     end
   end
