@@ -230,6 +230,22 @@ describe ConventionsController do
         expect(flash[:alert]).to be_present
       end
     end
+
+    context "using JSON" do
+      context "with valid attributes" do
+        it "responds with a 200 status" do
+          put :update, id: id, convention: second_valid_convention_attribs, format: :json
+          expect(response.status).to eq(200)
+        end
+      end
+
+      context "with invalid attributes" do
+        it "responds with a 422 status" do
+          put :update, id: id, convention: invalid_convention_attribs, format: :json
+          expect(response.status).to eq(422)
+        end
+      end
+    end
   end
 end
 

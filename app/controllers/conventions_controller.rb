@@ -60,13 +60,17 @@ class ConventionsController < ApplicationController
           get_all_conventions
           flash.now[:success] = "Convention updated"
         end
+        format.json { render json: @convention, status: 200 }
       end
     else
       respond_to do |format|
-        format.html { flash[:alert] = "Failed to update convention" }
-        format.js {}
+        format.html do
+          flash[:alert] = "Failed to update convention"
+          render action: "edit"
+        end
+        format.js { render action: "edit" }
+        format.json { render json: { errors: @convention.errors.full_messages }, status: 422 }
       end
-      render action: "edit"
     end
   end
 
