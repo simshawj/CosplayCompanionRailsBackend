@@ -78,6 +78,21 @@ describe ConventionsController do
         expect(flash[:alert]).to be_present
       end
     end
+
+    context "as JSON" do
+      context "with a valid convention" do
+        it "returns a status code of 201" do
+          post :create, convention: convention_attribs, :format => :json
+          expect(response.status).to eq(201)
+        end
+      end
+      context "with an invalid convention" do
+        it "returns a status code of 422" do
+          post :create, convention: invalid_convention_attribs, :format => :json
+          expect(response.status).to eq(422)
+        end
+      end
+    end
   end
 
   describe "POST #create.js" do

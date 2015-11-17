@@ -3,9 +3,7 @@ class ConventionsController < ApplicationController
     get_all_conventions
     respond_to do |format|
       format.html {}
-      format.json {
-        render json: @conventions
-      }
+      format.json { render json: @conventions }
     end
   end
 
@@ -22,13 +20,17 @@ class ConventionsController < ApplicationController
           get_all_conventions
           flash.now[:success] = "Convention successfully created"
         end
+        format.json { render json: @convention, status: 201 }
       end
     else
       respond_to do |format|
-        format.html { flash[:alert] = "There was an error creating the convention" }
-        format.js {}
+        format.html do 
+          flash[:alert] = "There was an error creating the convention"
+          render new_convention_path
+        end
+        format.js { render new_convention_path }
+        format.json { render json: { error: "Unable to create convention"}, status: 422 }
       end
-      render new_convention_path
     end
   end
 
