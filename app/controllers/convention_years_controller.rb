@@ -44,7 +44,7 @@ class ConventionYearsController < ApplicationController
   end
 
   def convention_year_params
-    params.require(:convention_year).permit(:year, :start, :days, :convention_id)
+    params.require(:convention_year).permit(:year, :start, :finish, :convention_id)
   end
 end
 

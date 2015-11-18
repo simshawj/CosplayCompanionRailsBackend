@@ -6,7 +6,7 @@ describe ConventionYearsController do
   let(:id) { convention_year.id }
   let(:invalid_attribs) { attributes_for(:convention_year).merge(convention_id: nil) }
   let(:convention_year_attribs) { invalid_attribs.merge(convention_id: convention.id) }
-  let(:second_attribs) { attributes_for(:convention_year, days: 7).merge(convention_id: convention.id) }
+  let(:second_attribs) { attributes_for(:convention_year, finish: Date.today + 7.days).merge(convention_id: convention.id) }
 
   describe "GET #index" do
     it "renders the :index view" do
@@ -128,7 +128,7 @@ describe ConventionYearsController do
       it "modifies the convention year" do
         put :update, id: id, convention_year: second_attribs
         convention_year.reload
-        expect(convention_year.days).to eq(7)
+        expect(convention_year.finish).to eq(Date.today + 7.days)
       end
       it "sets a successful flash message" do
         put :update, id: id, convention_year: second_attribs

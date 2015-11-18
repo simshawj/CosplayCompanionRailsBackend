@@ -1,17 +1,22 @@
 require 'rails_helper'
 
 def fill_in_new_convention_year(options={})
+  options[:startYear] ||= "2015"
+  options[:startMonth] ||= "May"
+  options[:startDay] ||= "22"
+  options[:finishYear] ||= "2015"
+  options[:finishMonth] ||= "May"
+  options[:finishDay] ||= "27"
   options[:year] ||= "2015"
-  options[:days] ||= "5"
-  options[:month] ||= "May"
-  options[:day] ||= "22"
 
   select options[:convention].name, from: "Convention"
   fill_in "Year", with: options[:year]
-  fill_in "Number of Days", with: options[:days]
-  select options[:month], from: "convention_year_start_2i"
-  select options[:day], from: "convention_year_start_3i"
-  select options[:year], from: "convention_year_start_1i"
+  select options[:startMonth], from: "convention_year_start_2i"
+  select options[:startDay], from: "convention_year_start_3i"
+  select options[:startYear], from: "convention_year_start_1i"
+  select options[:finishMonth], from: "convention_year_finish_2i"
+  select options[:finishDay], from: "convention_year_finish_3i"
+  select options[:finishYear], from: "convention_year_finish_1i"
   click_button "Submit"
 end
 
@@ -58,16 +63,6 @@ describe "Convention Year Creation" do
           fill_in_new_convention_year convention: convention 
          
           check_year_positive_result
-        end
-      end
-
-      context "with no paramters" do
-        it "does not create a convention" do
-          goto_new_convention
-          fill_in_new_convention_year convention: convention, days: "" 
-
-          expect(page).to have_content "Days can't be blank"
-          expect(page).to have_content "Days is not a number"
         end
       end
     end

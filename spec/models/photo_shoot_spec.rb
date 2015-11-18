@@ -41,7 +41,7 @@ describe PhotoShoot do
   end
 
   it "is invalid if it happens outside of a convention's timeframe" do
-    convention = build_stubbed(:convention_year, year: 2015, start: Date.new(2015,5,5), days: 2)
+    convention = build_stubbed(:convention_year, year: 2015, start: Date.new(2015,5,5), finish: Date.new(2015,5,5) + 2.days)
     expect(build_stubbed(:photo_shoot, convention_year: convention, start: DateTime.new(2015, 7, 7, 0, 0, 0) )).not_to be_valid
   end
 

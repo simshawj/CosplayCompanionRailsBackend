@@ -20,21 +20,18 @@ describe ConventionYear do
     expect(build_stubbed(:convention_year, year: 3.145)).not_to be_valid
   end
 
-  it "is invalid without a number of days" do
-    expect(build_stubbed(:convention_year, days: nil)).not_to be_valid
+  it "is invalid without a finish date" do
+    expect(build_stubbed(:convention_year, finish: nil)).not_to be_valid
   end
 
-  it "is invalid if number if days is not a number" do
-    expect(build_stubbed(:convention_year, days: "A String")).not_to be_valid
+  it "is invalid if finish date is not a date object" do
+    expect(build_stubbed(:convention_year, start: "A string")).not_to be_valid
+    expect(build_stubbed(:convention_year, start: 342)).not_to be_valid
+    expect(build_stubbed(:convention_year, start: 3.14)).not_to be_valid
   end
 
-  it "is invalid if number of days is less than one" do
-    expect(build_stubbed(:convention_year, days: -10)).not_to be_valid
-    expect(build_stubbed(:convention_year, days: 0)).not_to be_valid
-  end
-
-  it "is invalid if number of days is greater than 14" do
-    expect(build_stubbed(:convention_year, days: 15)).not_to be_valid
+  it "is invalid if it starts after it ends" do
+    expect(build_stubbed(:convention_year, finish: Date.today - 4.days)).not_to be_valid
   end
 
   it { should belong_to(:convention) }

@@ -10,6 +10,6 @@ describe "show convention year" do
     expect(page).to have_content con.name
     expect(page).to have_content con_year.year
     expect(page).to have_content con_year.start
-    expect(page).to have_content con_year.days
+    expect(page).to have_content con_year.finish
   end
 end

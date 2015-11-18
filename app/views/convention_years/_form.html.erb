@@ -16,8 +16,8 @@
   <%= f.text_field(:year) %>
   <%= f.label(:start, "Start Date") %>
   <%= f.date_select(:start, order: [:month, :day, :year]) %>
-  <%= f.label(:days, "Number of Days") %>
-  <%= f.text_field(:days) %>
+  <%= f.label(:finish, "End Date") %>
+  <%= f.date_select(:finish) %>
   <%= f.submit "Submit" %>
 
 <% end %>

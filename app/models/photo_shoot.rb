@@ -11,8 +11,7 @@ class PhotoShoot < ActiveRecord::Base
   def must_happen_during_convention
     if convention_year.present? && start.present?
       day_zero = convention_year.start - 1
-      last_day = convention_year.start + convention_year.days - 1
-      if (start < day_zero || start > last_day)
+      if (start < day_zero || start > convention_year.finish)
         errors.add(:start, "must take place during the convention")
       end
     end
