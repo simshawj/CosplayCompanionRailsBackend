@@ -57,7 +57,9 @@ Rails.application.routes.draw do
   resources :conventions, except: :destroy do
     resources :convention_years, only: [:index, :new, :create]
   end
-  resources :convention_years, except: :destroy
+  resources :convention_years, except: :destroy do
+    resources :photo_shoots, only: [:index, :new, :create]
+  end
   resources :photo_shoots, except: :destroy
 end
 

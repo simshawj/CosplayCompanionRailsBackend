@@ -16,6 +16,25 @@ describe PhotoShootsController do
     it "creates a list of photoshoots" do
       expect(assigns(:photo_shoots)).to eq([photo_shoot])
     end
+    it "returns only photoshoots for a single year when one is given" do
+      year2 = create(:convention_year2)
+      shoot2 = create(:photo_shoot, convention_year: year2, start: DateTime.strptime("10-22-2016", "%m-%d-%Y"))
+      get :index, convention_year_id: convention_year.id
+      expect(assigns(:photo_shoots)).to eq([photo_shoot])
+    end
+
+    context "as json" do
+      before(:each) do
+        photo_shoot
+        get :index, convention_year_id: convention_year.id, format: :json
+      end
+      it "responds with a 200 status code" do
+        expect(response.status).to eq(200)
+      end
+      it "returns the convention years in json format" do
+        expect(response.body).to eq([photo_shoot].to_json)
+      end
+    end
   end
 
   describe "GET #new" do
@@ -54,6 +73,21 @@ describe PhotoShootsController do
       it "sets a flash :alert message" do
         post :create, photo_shoot: invalid_attribs
         expect(flash[:alert]).to be_present
+      end
+    end
+
+    context "as JSON" do
+      context "with valid parameters" do
+        it "responds with a 201 code" do
+          post :create, photo_shoot: valid_attribs, format: :json
+          expect(response.status).to eq(201)
+        end
+      end
+      context "with invalid parameters" do
+        it "respondsd with a 422 code" do
+          post :create, photo_shoot: invalid_attribs, format: :json
+          expect(response.status).to eq(422)
+        end
       end
     end
   end
@@ -139,6 +173,22 @@ describe PhotoShootsController do
       it "sets an alert flash message" do
         put :update, id: id, photo_shoot: invalid_attribs
         expect(flash[:alert]).to be_present
+      end
+    end
+
+    context "as JSON" do
+      before(:each) { photo_shoot }
+      context "with valid parameters" do
+        it "responds with a 200 code" do
+          put :update, id: id,  photo_shoot: second_valid_attribs, format: :json
+          expect(response.status).to eq(200)
+        end
+      end
+      context "with invalid parameters" do
+        it "respondsd with a 422 code" do
+          put :update, id: id, photo_shoot: invalid_attribs, format: :json
+          expect(response.status).to eq(422)
+        end
       end
     end
   end

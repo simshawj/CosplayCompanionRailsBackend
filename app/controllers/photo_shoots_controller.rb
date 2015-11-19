@@ -1,6 +1,15 @@
 class PhotoShootsController < ApplicationController
   def index
-    @photo_shoots = PhotoShoot.all
+    if (params[:convention_year_id])
+      convention_year = ConventionYear.find(params[:convention_year_id])
+      @photo_shoots = convention_year.photo_shoots
+    else
+      @photo_shoots = PhotoShoot.all
+    end
+    respond_to do |format|
+      format.html {}
+      format.json { render json: @photo_shoots }
+    end
   end
 
   def new
@@ -10,10 +19,18 @@ class PhotoShootsController < ApplicationController
   def create
     @photo_shoot = PhotoShoot.new(photo_shoot_params)
     if @photo_shoot.save
-      redirect_to photo_shoots_path, success: "Photo shoot successfully created"
+      respond_to do |format|
+        format.html { redirect_to photo_shoots_path, success: "Photo shoot successfully created" }
+        format.json { render json: @photo_shoot, status: 201 }
+      end
     else
-      flash[:alert] = "Could not create photo shoot"
-      render new_photo_shoot_path
+      respond_to do |format|
+        format.html do
+          flash[:alert] = "Could not create photo shoot"
+          render new_photo_shoot_path
+        end
+        format.json { render json: { errors: @photo_shoot.errors.full_messages }, status: 422 }
+      end
     end
   end
 
@@ -36,10 +53,18 @@ class PhotoShootsController < ApplicationController
   def update
     @photo_shoot = PhotoShoot.find(params[:id])
     if @photo_shoot.update(photo_shoot_params)
-      redirect_to photo_shoots_path, success: "Photo shoot successfully updated"
+      respond_to do |format|
+        format.html { redirect_to photo_shoots_path, success: "Photo shoot successfully updated" }
+        format.json { render json: @photo_shoot, status: 200 }
+      end
     else
-      flash[:alert] = "Could not update photo shoot"
-      render :edit
+      respond_to do |format|
+        format.html do
+          flash[:alert] = "Could not update photo shoot"
+          render :edit
+        end
+        format.json { render json: { errors: @photo_shoot.errors.full_messages }, status: 422 }
+      end
     end
   end
 
