@@ -71,4 +71,12 @@ class PhotoShootsController < ApplicationController
   def photo_shoot_params
     params.require(:photo_shoot).permit(:series, :start, :location, :description, :convention_year_id)
   end
+
+  def verified_request?
+    if request.content_type == "application/json"
+      true
+    else
+      super()
+    end
+  end
 end

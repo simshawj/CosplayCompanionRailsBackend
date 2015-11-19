@@ -71,5 +71,13 @@ class ConventionYearsController < ApplicationController
   def convention_year_params
     params.require(:convention_year).permit(:year, :start, :finish, :convention_id, :location, :display)
   end
+
+  def verified_request?
+    if request.content_type == "application/json"
+      true
+    else
+      super()
+    end
+  end
 end
 
