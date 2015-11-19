@@ -5,6 +5,10 @@ describe ConventionYear do
     expect(build_stubbed(:convention_year, year: nil)).not_to be_valid
   end
 
+  it "is invalid without a location" do
+    expect(build_stubbed(:convention_year, location: nil)).not_to be_valid
+  end
+
   it "is invalid without a start date" do
     expect(build_stubbed(:convention_year, start: nil)).not_to be_valid
   end

@@ -7,6 +7,7 @@ class ConventionYear < ActiveRecord::Base
   validates :start, presence: true
   validates :finish, presence: true
   validates :convention, presence: true
+  validates :location, presence: true
   validate :start_must_be_a_date
   validate :finish_must_be_a_date
   validate :finish_must_be_after_start

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117223640) do
+ActiveRecord::Schema.define(version: 20151119193819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20151117223640) do
     t.datetime "updated_at",    null: false
     t.integer  "convention_id"
     t.date     "finish"
+    t.string   "display"
+    t.string   "location"
   end
 
   add_index "convention_years", ["convention_id", "year"], name: "index_convention_years_on_convention_id_and_year", unique: true, using: :btree
