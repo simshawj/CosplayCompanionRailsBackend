@@ -31,7 +31,7 @@ describe ConventionYear do
   end
 
   it "is invalid if it starts after it ends" do
-    expect(build_stubbed(:convention_year, finish: Date.today - 4.days)).not_to be_valid
+    expect(build_stubbed(:convention_year, finish: Date.strptime("10-19-2015", "%m-%d-%Y"))).not_to be_valid
   end
 
   it { should belong_to(:convention) }

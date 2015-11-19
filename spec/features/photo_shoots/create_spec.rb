@@ -12,8 +12,11 @@ describe "Photo shoot creation" do
       fill_in "Series", with: "A test series"
       fill_in "Location", with: "End of time"
       fill_in "Description", with: "We're just testing this"
-      #Since the default covention_year is today, we'll let the photo shoot happen now which should be the default
-      
+     
+      select "October", from: "photo_shoot_start_2i"
+      select "22", from: "photo_shoot_start_3i"
+      select "2015", from: "photo_shoot_start_1i"
+
       click_button "Submit"
 
       expect(page).to have_content "A test series"
