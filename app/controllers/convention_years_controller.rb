@@ -1,6 +1,15 @@
 class ConventionYearsController < ApplicationController
   def index
-    @convention_years = ConventionYear.all.order(:convention_id, :year)
+    if (params[:convention_id])
+      convention = Convention.find(params[:convention_id])
+      @convention_years = convention.convention_years
+    else
+      @convention_years = ConventionYear.all.order(:convention_id, :year)
+    end
+    respond_to do |format|
+      format.html {}
+      format.json { render json: @convention_years }
+    end
   end
 
   def new
@@ -10,10 +19,18 @@ class ConventionYearsController < ApplicationController
   def create
     @convention_year = ConventionYear.new(convention_year_params)
     if @convention_year.save
-      redirect_to convention_years_path, success: "Convention year successfully created"
+      respond_to do |format|
+        format.html { redirect_to convention_years_path, success: "Convention year successfully created" }
+        format.json { render json: @convention_year, status: 201 }
+      end
     else
-      flash[:alert] = "Could not create convention year"
-      render new_convention_year_path
+      respond_to do |format|
+        format.html do
+          flash[:alert] = "Could not create convention year"
+          render new_convention_year_path
+        end
+        format.json { render json: { errors: @convention_year.errors.full_messages }, status: 422 }
+      end
     end
   end
 
@@ -36,10 +53,18 @@ class ConventionYearsController < ApplicationController
   def update
     @convention_year = ConventionYear.find(params[:id])
     if @convention_year.update(convention_year_params)
-      redirect_to convention_years_path, success: "Convention year successfully updated"
+      respond_to do |format|
+        format.html { redirect_to convention_years_path, success: "Convention year successfully updated" }
+        format.json { render json: @convention_year, status: 200 }
+      end
     else
-      flash[:alert] = "Unable to update convention year"
-      render :edit
+      respond_to do |format|
+        format.html do
+          flash[:alert] = "Unable to update convention year"
+          render :edit
+        end
+        format.json { render json: { errors: @convention_year.errors.full_messages }, status: 422 }
+      end
     end
   end
 
