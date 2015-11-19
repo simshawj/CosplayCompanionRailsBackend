@@ -12,8 +12,6 @@
 <%= form_for @convention_year do |f| %>
   <%= f.label(:convention_id, "Convention") %>
   <%= f.collection_select(:convention_id, Convention.all, :id, :name) %>
-  <%= f.label(:year, "Year") %>
-  <%= f.text_field(:year) %>
   <%= f.label(:location, "Location") %>
   <%= f.text_field(:location) %>
   <%= f.label(:start, "Start Date") %>

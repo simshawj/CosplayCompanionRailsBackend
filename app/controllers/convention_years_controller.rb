@@ -4,7 +4,7 @@ class ConventionYearsController < ApplicationController
       convention = Convention.find(params[:convention_id])
       @convention_years = convention.convention_years
     else
-      @convention_years = ConventionYear.all.order(:convention_id, :year)
+      @convention_years = ConventionYear.all.order(:convention_id)
     end
     respond_to do |format|
       format.html {}

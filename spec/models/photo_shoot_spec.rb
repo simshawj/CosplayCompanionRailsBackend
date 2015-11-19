@@ -33,16 +33,14 @@ describe PhotoShoot do
   end
 
   it "is valid if the start and series are the same but at a different convention" do
-    convention = create(:convention)
-    con_year1 = create(:convention_year, convention: convention)
-    con_year2 =create(:convention_year, year: 2014, convention: convention)
+    con_year1 = create(:convention_year)
+    con_year2 = create(:convention_year2)
     create(:photo_shoot, convention_year: con_year1)
-    expect(build_stubbed(:photo_shoot, convention_year: con_year2)).to be_valid
+    expect(build_stubbed(:photo_shoot, convention_year: con_year2, start: Date.strptime("10-21-2016", "%m-%d-%Y"))).to be_valid
   end
 
   it "is invalid if it happens outside of a convention's timeframe" do
-    convention = build_stubbed(:convention_year, year: 2015, start: Date.new(2015,5,5), finish: Date.new(2015,5,5) + 2.days)
-    expect(build_stubbed(:photo_shoot, convention_year: convention, start: DateTime.new(2015, 7, 7, 0, 0, 0) )).not_to be_valid
+    expect(build_stubbed(:photo_shoot, start: DateTime.strptime("9-20-2015", "%m-%d-%Y"))).not_to be_valid
   end
 
 end

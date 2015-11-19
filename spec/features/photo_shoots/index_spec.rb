@@ -8,7 +8,7 @@ describe "photo_shoot index" do
     visit("photo_shoots")
 
     expect(page).to have_content con.name
-    expect(page).to have_content con_year.year
+    expect(page).to have_content con_year.start.year
     expect(page).to have_content photo_shoot.series
     expect(page).to have_content photo_shoot.location
   end

@@ -19,11 +19,12 @@ describe ConventionYearsController do
     end
     it "sorts by convention id then by year" do
       con2 = create(:convention, name: "Con2")
-      conventionyear2 = create(:convention_year, convention: convention, year: 2000)
-      con2year1 = create(:convention_year, convention: con2, year: 2013)
-      con2year2 = create(:convention_year, convention: con2, year: 2010)
+      convention_year2 = create(:convention_year2, convention: convention)
+      con2year1 = create(:convention_year, convention: con2)
+      con2year2 = create(:convention_year2, convention: con2)
       get :index
-      array = [conventionyear2, convention_year, con2year2, con2year1]
+      #TODO: Clean this up if possible
+      array = [convention_year2, convention_year, con2year1, con2year2]
       expect(assigns(:convention_years)).to eq(array)
     end
     context "as JSON" do

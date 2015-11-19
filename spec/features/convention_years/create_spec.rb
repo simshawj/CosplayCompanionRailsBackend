@@ -7,11 +7,9 @@ def fill_in_new_convention_year(options={})
   options[:finishYear] ||= "2015"
   options[:finishMonth] ||= "May"
   options[:finishDay] ||= "27"
-  options[:year] ||= "2015"
   options[:location] ||= "Mars"
 
   select options[:convention].name, from: "Convention"
-  fill_in "Year", with: options[:year]
   fill_in "Location", with: options[:location]
   select options[:startMonth], from: "convention_year_start_2i"
   select options[:startDay], from: "convention_year_start_3i"

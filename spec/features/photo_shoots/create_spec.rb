@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 describe "Photo shoot creation" do
-  let!(:con) { create(:convention) }
-  let!(:con_year) { create(:convention_year, convention: con) }
+  let!(:con_year) { create(:convention_year) }
   context "with valid parameters" do
     it "creates the convention from the index" do
       visit("photo_shoots")
       click_link "Create a photo shoot"
 
-      select con_year.full_listing, from: "Convention Year"
+      select con_year.display, from: "Convention Year"
       fill_in "Series", with: "A test series"
       fill_in "Location", with: "End of time"
       fill_in "Description", with: "We're just testing this"

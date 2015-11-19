@@ -19,7 +19,7 @@
           <% else %>
             <ul class="inline-list">
               <% convention.convention_years.each do |year| %>
-                <li><%= link_to year.year, convention_year_path(year), title: year %></li>
+                <li><%= link_to year.start.year, convention_year_path(year), title: year %></li>
               <% end %>
             </ul>
           <% end %>

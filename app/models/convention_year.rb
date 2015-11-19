@@ -1,9 +1,9 @@
 class ConventionYear < ActiveRecord::Base
+  before_save :setup_display_name
+
   belongs_to :convention
   has_many :photo_shoots
 
-  validates :year, presence: true, numericality: { only_integer: true, greater_than: 1979 }
-  validates :year, uniqueness: { scope: :convention, message: "already has a date for that year" }
   validates :start, presence: true
   validates :finish, presence: true
   validates :convention, presence: true
@@ -32,7 +32,7 @@ class ConventionYear < ActiveRecord::Base
     end
   end
 
-  def full_listing
-    convention.name + " " + year.to_s
+  def setup_display_name
+    self.display ||= "#{self.convention.name} #{self.start.year}"
   end
 end

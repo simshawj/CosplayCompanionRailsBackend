@@ -12,7 +12,7 @@
 
 <%= form_for @photo_shoot do |f| %>
   <%= f.label(:convention_year_id, "Convention Year") %>
-  <%= f.collection_select(:convention_year_id, ConventionYear.all, :id, :full_listing ) %>
+  <%= f.collection_select(:convention_year_id, ConventionYear.all, :id, :display ) %>
   <%= f.label(:series, "Series") %>
   <%= f.text_field(:series) %>
   <%= f.label(:location, "Location") %>

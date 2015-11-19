@@ -2,7 +2,7 @@
 
 <ul>
   <% @convention_years.each do |year| %>
-    <li> <%= link_to year.convention.name + " " + year.year.to_s, convention_year_path(year) %></li>
+    <li> <%= link_to year.convention.name + " " + year.start.year.to_s, convention_year_path(year) %></li>
 
   <% end %>
 </ul>

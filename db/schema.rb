@@ -11,13 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119193819) do
+ActiveRecord::Schema.define(version: 20151119202052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "convention_years", force: :cascade do |t|
-    t.integer  "year"
     t.date     "start"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
@@ -27,7 +26,6 @@ ActiveRecord::Schema.define(version: 20151119193819) do
     t.string   "location"
   end
 
-  add_index "convention_years", ["convention_id", "year"], name: "index_convention_years_on_convention_id_and_year", unique: true, using: :btree
   add_index "convention_years", ["convention_id"], name: "index_convention_years_on_convention_id", using: :btree
 
   create_table "conventions", force: :cascade do |t|
