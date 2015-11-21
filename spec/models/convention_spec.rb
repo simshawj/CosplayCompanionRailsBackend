@@ -5,7 +5,7 @@ describe Convention do
 
   it { is_expected.to validate_uniqueness_of(:name) }
 
-  it { should have_many(:convention_years) }
+  it { is_expected.to have_many(:convention_years) }
 
   it "returns a string to use in id tags" do
     con = build_stubbed(:convention, name:"I have many spaces")
