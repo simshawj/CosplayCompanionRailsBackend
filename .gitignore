@@ -13,3 +13,6 @@
 /tmp
 
 *.swp
+
+# Ignore uploads folder
+/public/uploads/*
