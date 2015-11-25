@@ -1,6 +1,7 @@
 class ConventionsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   def index
-    get_all_conventions
+    @conventions = Convention.all
     respond_to do |format|
       format.html {}
       format.json { render json: @conventions }
@@ -13,11 +14,14 @@ class ConventionsController < ApplicationController
 
   def create
     @convention = Convention.new(convention_params)
+    if params[:logo64]
+      @convention.logo = parse_png_from_base64(params[:logo64], params[:name])
+    end
     if @convention.save
       respond_to do |format|
         format.html { redirect_to conventions_path, success: "Convention successfully created" }
         format.js do
-          get_all_conventions
+          @conventions = Convention.all
           flash.now[:success] = "Convention successfully created"
         end
         format.json { render json: @convention, status: 201 }
@@ -57,7 +61,7 @@ class ConventionsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to session.delete(:return_to), success: "Convention updated" }
         format.js do
-          get_all_conventions
+          @conventions = Convention.all
           flash.now[:success] = "Convention updated"
         end
         format.json { render json: @convention, status: 200 }
@@ -75,19 +79,21 @@ class ConventionsController < ApplicationController
   end
 
   def convention_params
-    params.require(:convention).permit(:name, :description)
+    params.require(:convention).permit(:name, :description, :logo)
   end
 
-  private
-  def get_all_conventions
-    @conventions = Convention.all
-  end
+  def parse_png_from_base64(image, filename)
+    return image if not image.is_a?(String)
+    tempfile = Tempfile.new("temp_logo")
+    tempfile.binmode
+    tempfile.write(Base64.decode64(image))
+    tempfile.rewind
 
-  def verified_request?
-    if request.content_type == "application/json"
-      true
-    else
-      super()
-    end
+    type = "image/png"
+
+    ActionDispatch::Http::UploadedFile.new(
+      :tempfile => tempfile,
+      :filename => File.basename("#{filename}_logo.png"),
+      :type => type)
   end
 end
