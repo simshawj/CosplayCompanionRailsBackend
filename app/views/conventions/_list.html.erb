@@ -4,7 +4,11 @@
       <div class="row">
         <div class="small-7 columns convention-info">
           <div>
-            <img src="http://placehold.it/100x100" class="convention-logo" alt="<%= convention.name %>'s Logo">
+            <% if convention.logo.present? %>
+              <%= image_tag convention.logo.url, class: "convention-logo" %>
+            <% else %>
+              <img src="http://placehold.it/100x100" class="convention-logo" alt="<%= convention.name %>'s Logo">
+            <% end %>
           </div>
           <div class="convention-info">
             <%= link_to convention.name, convention_path(convention), title: convention.name %>
