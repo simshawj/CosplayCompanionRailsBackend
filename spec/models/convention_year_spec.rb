@@ -9,9 +9,9 @@ describe ConventionYear do
 
   it { is_expected.to validate_presence_of(:convention) }
 
-  it { should belong_to(:convention) }
+  it { is_expected.to belong_to(:convention) }
 
-  it { should have_many(:photo_shoots) }
+  it { is_expected.to have_many(:photo_shoots) }
   
   it "is invalid if start date is not a date object" do
     expect(build_stubbed(:convention_year, start: "A string")).not_to be_valid
