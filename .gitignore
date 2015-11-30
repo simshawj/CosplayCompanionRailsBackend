@@ -16,3 +16,7 @@
 
 # Ignore uploads folder
 /public/uploads/*
+
+# Each developer should maintain their own developer and testing configs
+config/environments/development.rb
+config/environments/test.rb
