@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-ruby '2.2.4'
+ruby '2.3.0'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5'
 
 gem 'foundation-rails'
 gem 'jbuilder'
