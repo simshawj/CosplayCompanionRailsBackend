@@ -20,10 +20,6 @@ class ConventionsController < ApplicationController
     if @convention.save
       respond_to do |format|
         format.html { redirect_to conventions_path, success: "Convention successfully created" }
-        format.js do
-          @conventions = Convention.all
-          flash.now[:success] = "Convention successfully created"
-        end
         format.json { render json: @convention, status: 201 }
       end
     else
@@ -32,7 +28,6 @@ class ConventionsController < ApplicationController
           flash[:alert] = "There was an error creating the convention"
           render new_convention_path
         end
-        format.js { render new_convention_path }
         format.json { render json: { errors: @convention.errors.full_messages }, status: 422 }
       end
     end
@@ -60,10 +55,6 @@ class ConventionsController < ApplicationController
     if @convention.update(convention_params)
       respond_to do |format|
         format.html { redirect_to session.delete(:return_to), success: "Convention updated" }
-        format.js do
-          @conventions = Convention.all
-          flash.now[:success] = "Convention updated"
-        end
         format.json { render json: @convention, status: 200 }
       end
     else
@@ -72,7 +63,6 @@ class ConventionsController < ApplicationController
           flash[:alert] = "Failed to update convention"
           render action: "edit"
         end
-        format.js { render action: "edit" }
         format.json { render json: { errors: @convention.errors.full_messages }, status: 422 }
       end
     end

@@ -3,7 +3,8 @@ class Convention < ActiveRecord::Base
 
   mount_uploader :logo, ConventionLogoUploader
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true
+  validates_uniqueness_of :name, case_sensitive: false
 
   def id_safe_name
     name.tr(" ", "_")

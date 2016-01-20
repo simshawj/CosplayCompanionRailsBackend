@@ -43,13 +43,6 @@ describe "Convention creation" do
       goto_form
       expect(page).to have_selector("#modifyConModal", visible: true)
     end
-    it "creates a new convention" do
-      goto_form
-      within("#modifyConModal") do
-        fill_in_form
-      end
-      check_positive_result
-    end
   end
 
 end

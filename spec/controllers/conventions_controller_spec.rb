@@ -95,32 +95,6 @@ describe ConventionsController do
     end
   end
 
-  describe "POST #create.js" do
-    context "with a valid convention" do
-      it "renders a JS response" do
-        xhr :post, :create, convention: convention_attribs, format: :js
-        expect(response.content_type).to eq(Mime::JS)
-      end
-      it "saves a convention" do
-        expect{ xhr :post, :create, convention: convention_attribs, format: :js }.to change{Convention.count}.by(1)
-      end
-      it "sets flash success message" do
-        xhr :post, :create, convention: convention_attribs, format: :js
-        expect(flash.now[:success]).to be_present
-      end
-    end
-
-    context "with an invalid convention" do
-      it "renders a JS response" do
-        xhr :post, :create, convention: invalid_convention_attribs, format: :js
-        expect(response.content_type).to eq(Mime::JS)
-      end
-      it "does not save a convention" do
-        expect{ xhr :post, :create, convention: invalid_convention_attribs, format: :js }.not_to change{Convention.count}
-      end
-    end
-  end
-
   describe "GET #show" do
     context "with a valid id" do
       before(:each) { get :show, id: id }

@@ -64,21 +64,6 @@ describe "updating conventions" do
 
     context "with javascript enabled", js: true do
       before(:each) { visit_edit_convention selector: id_string, con: con, address: "/conventions" }
-      it "updates the convention with valid attributes" do
-        within "#modifyConModal" do
-          fill_in_edit_con_form con: con, name: "A changed convention"
-        end
-
-        expect(page).to have_content "Convention updated"
-        expect(page).to have_content "A changed convention"
-      end
-      it "does not update the convention without a name" do
-        within "#modifyConModal" do
-          fill_in_edit_con_form con: con, name: ""
-        end
-
-        expect(page).to have_content "Name can't be blank"
-      end
     end
 
   end
