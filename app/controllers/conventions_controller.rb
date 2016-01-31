@@ -3,13 +3,8 @@ class ConventionsController < ApplicationController
   def index
     @conventions = Convention.all
     respond_to do |format|
-      format.html {}
       format.json { render json: @conventions }
     end
-  end
-
-  def new
-    @convention = Convention.new
   end
 
   def create
@@ -19,21 +14,17 @@ class ConventionsController < ApplicationController
     end
     if @convention.save
       respond_to do |format|
-        format.html { redirect_to conventions_path, success: "Convention successfully created" }
         format.json { render json: @convention, status: 201 }
       end
     else
       respond_to do |format|
-        format.html do 
-          flash[:alert] = "There was an error creating the convention"
-          render new_convention_path
-        end
         format.json { render json: { errors: @convention.errors.full_messages }, status: 422 }
       end
     end
   end
 
   def show
+    #TODO: Should we get rid of this as well since it doesn't return JSON?
     begin
       @convention = Convention.find(params[:id]) 
     rescue
@@ -41,28 +32,14 @@ class ConventionsController < ApplicationController
     end
   end
 
-  def edit
-    session[:return_to] ||= request.referer
-    begin
-      @convention = Convention.find(params[:id])
-    rescue
-      redirect_to conventions_path, alert: "Could not retrieve convention to edit"
-    end
-  end
-
   def update
     @convention = Convention.find(params[:id])
     if @convention.update(convention_params)
       respond_to do |format|
-        format.html { redirect_to session.delete(:return_to), success: "Convention updated" }
         format.json { render json: @convention, status: 200 }
       end
     else
       respond_to do |format|
-        format.html do
-          flash[:alert] = "Failed to update convention"
-          render action: "edit"
-        end
         format.json { render json: { errors: @convention.errors.full_messages }, status: 422 }
       end
     end

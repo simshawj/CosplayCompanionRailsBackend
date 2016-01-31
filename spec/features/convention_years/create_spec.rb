@@ -34,24 +34,6 @@ end
 describe "Convention Year Creation" do
   let!(:convention) { create(:convention) }
 
-  context "With JS enabled", js: true do
-    context "from convention list" do
-      context "with valid parameters" do
-        it "creates the convention year" do
-          visit "/conventions"
-          within("#" + convention.id_safe_name) do
-            click_link "Add a year"
-          end
-          within("#modifyConYearModal") do
-            fill_in_new_convention_year convention: convention
-          end
-          check_year_positive_result
-        end
-      end
-    end
-    context "from convention details"
-  end
-
   context "with JS disabled" do
     context "from convention list"
     context "from convention details"
