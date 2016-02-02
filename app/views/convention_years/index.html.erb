@@ -1,8 +1,0 @@
-<%= link_to "Add a new year", new_convention_year_path %>
-
-<ul>
-  <% @convention_years.each do |year| %>
-    <li> <%= link_to year.convention.name + " " + year.start.year.to_s, convention_year_path(year) %></li>
-
-  <% end %>
-</ul>
