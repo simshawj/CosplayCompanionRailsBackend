@@ -12,7 +12,7 @@ describe ConventionsController do
     context "as json" do
       before(:each) { 
         convention
-        get :index, :format => :json 
+        get :index, format: :json
       }
       it "responds with the convention as json" do
         expect(response.body).to eq([convention].to_json)
@@ -24,47 +24,50 @@ describe ConventionsController do
     context "as JSON" do
       context "with a valid convention" do
         it "returns a status code of 201" do
-          post :create, convention: convention_attribs, :format => :json
+          post :create, convention: convention_attribs, format: :json
           expect(response.status).to eq(201)
+        end
+        it "saves a Convention" do
+          expect{post :create, convention: convention_attribs, format: :json}.to change{Convention.count}.by(1)
         end
       end
       context "with an invalid convention" do
         it "returns a status code of 422" do
-          post :create, convention: invalid_convention_attribs, :format => :json
+          post :create, convention: invalid_convention_attribs, format: :json
           expect(response.status).to eq(422)
+        end
+        it "does not save a Convention" do
+          expect{post :create, convention: invalid_convention_attribs, format: :json}.not_to change{Convention.count}
         end
       end
     end
   end
 
   describe "GET #show" do
-    context "with an invalid id" do
-      before(:each) do
-        convention.delete
-        get :show, id: id
-      end
-      it "redirects to the :index view" do
-        expect(response).to redirect_to action: "index"
-      end
-      it "sets flash alert message" do
-        expect(flash[:alert]).to be_present
-      end
-    end
+    #TODO: Come back and setup as json
   end
 
   describe "PUT #update" do
     context "using JSON" do
       context "with valid attributes" do
+        before(:each) {put :update, id: id, convention: second_valid_convention_attribs, format: :json}
         it "responds with a 200 status" do
-          put :update, id: id, convention: second_valid_convention_attribs, format: :json
           expect(response.status).to eq(200)
+        end
+        it "updates the convention" do
+          convention.reload
+          expect(convention.name).to eq(second_valid_convention_name)
         end
       end
 
       context "with invalid attributes" do
+        before(:each) {put :update, id: id, convention: invalid_convention_attribs, format: :json}
         it "responds with a 422 status" do
-          put :update, id: id, convention: invalid_convention_attribs, format: :json
           expect(response.status).to eq(422)
+        end
+        it "does not update the convention" do
+          convention.reload
+          expect(convention.name).to eq("Test Convention")
         end
       end
     end
