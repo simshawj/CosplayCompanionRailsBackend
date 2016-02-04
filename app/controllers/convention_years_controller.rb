@@ -25,6 +25,7 @@ class ConventionYearsController < ApplicationController
   end
 
   def show
+    #TODO: Set this to use JSON
     begin
       @convention_year = ConventionYear.find(params[:id])
     rescue

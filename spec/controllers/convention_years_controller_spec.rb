@@ -14,7 +14,7 @@ describe ConventionYearsController do
         convention_year
       end
       it "responds with JSON" do
-        get :index, format: :json
+        get :index, format: :json, convention_id: convention
         expect(response.body).to eq([convention_year].to_json)
       end
       it "returns only the convention years for the given convention" do
