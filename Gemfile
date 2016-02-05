@@ -3,11 +3,8 @@ ruby '2.3.0'
 
 gem 'rails', '4.2.5'
 
-gem 'foundation-rails'
 gem 'jbuilder'
-gem 'jquery-rails'
 gem 'pg'
-gem 'sass-rails'
 gem 'turbolinks'
 gem 'uglifier'
 gem 'carrierwave'
@@ -28,8 +25,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara'
-  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'shoulda-matchers'
 end
