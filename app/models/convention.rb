@@ -1,4 +1,4 @@
-class Convention < ActiveRecord::Base
+class Convention < ApplicationRecord
   has_many :convention_years
 
   mount_uploader :logo, ConventionLogoUploader

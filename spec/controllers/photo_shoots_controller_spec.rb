@@ -65,7 +65,7 @@ describe PhotoShootsController do
         end
       end
       context "with invalid parameters" do
-        it "respondsd with a 422 code" do
+        it "responds with a 422 code" do
           put :update, id: id, photo_shoot: invalid_attribs, format: :json
           expect(response.status).to eq(422)
         end
