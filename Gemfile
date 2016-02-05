@@ -3,7 +3,6 @@ ruby '2.3.0'
 
 gem 'rails', '5.0.0.beta2'
 
-gem 'jbuilder'
 gem 'pg'
 gem 'turbolinks'
 gem 'uglifier'

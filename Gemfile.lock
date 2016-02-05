@@ -92,9 +92,6 @@ GEM
       activesupport (>= 4.1.0)
     i18n (0.7.0)
     ipaddress (0.8.2)
-    jbuilder (2.4.0)
-      activesupport (>= 3.0.0, < 5.1)
-      multi_json (~> 1.2)
     json (1.8.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -202,7 +199,6 @@ DEPENDENCIES
   devise (~> 4.0.0.rc1)
   factory_girl_rails
   fog-aws
-  jbuilder
   mini_magick
   pg
   rails (= 5.0.0.beta2)

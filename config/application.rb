@@ -13,5 +13,6 @@ module Website
     # -- all .rb files in that directory are automatically loaded.
 
     #config.active_record.raise_in_transactional_callbacks = true
+    config.api_only = true
   end
 end
