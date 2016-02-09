@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # Serve websocket cable requests in-process
   # mount ActionCable.server => '/cable'
   
-  resources :conventions, except: :destroy do
+  resources :conventions, except: :destroy, constraints: lambda { |req| req.format == :json } do
     resources :convention_years, only: [:index, :new, :create]
   end
   resources :convention_years, except: :destroy do
