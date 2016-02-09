@@ -4,8 +4,6 @@ ruby '2.3.0'
 gem 'rails', '5.0.0.beta2'
 
 gem 'pg'
-gem 'turbolinks'
-gem 'uglifier'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog-aws'
@@ -19,7 +17,7 @@ group :doc do
 end
 
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.5.0.beta1'
   gem 'factory_girl_rails'
 end
 
