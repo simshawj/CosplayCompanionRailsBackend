@@ -27,13 +27,13 @@ describe PhotoShootsController do
     context "as JSON" do
       context "with valid parameters" do
         it "responds with a 201 code" do
-          post :create, params: { photo_shoot: valid_attribs }, format: :json
+          post :create, params: { photo_shoot: valid_attribs, convention_year_id: convention_year.id }, format: :json
           expect(response.status).to eq(201)
         end
       end
       context "with invalid parameters" do
         it "respondsd with a 422 code" do
-          post :create, params: { photo_shoot: invalid_attribs }, format: :json
+          post :create, params: { photo_shoot: invalid_attribs, convention_year_id: convention_year.id }, format: :json
           expect(response.status).to eq(422)
         end
       end

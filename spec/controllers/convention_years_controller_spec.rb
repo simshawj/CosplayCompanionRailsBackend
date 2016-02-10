@@ -30,13 +30,13 @@ describe ConventionYearsController do
     context "as JSON" do
       context "with valid parameters" do
         it "returns a status code of 201" do
-          post :create, params: { convention_year: convention_year_attribs }, format: :json
+          post :create, params: { convention_year: convention_year_attribs, convention_id:convention.id }, format: :json
           expect(response.status).to eq(201)
         end
       end
       context "with invalid parameters" do
         it "returns a status code of 422" do
-          post :create, params: { convention_year: invalid_attribs }, format: :json
+          post :create, params: { convention_year: invalid_attribs, convention_id:convention.id }, format: :json
           expect(response.status).to eq(422)
         end
       end

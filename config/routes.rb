@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   resources :conventions, except: :destroy, constraints: lambda { |req| req.format == :json } do
     resources :convention_years, only: [:index, :new, :create]
   end
-  resources :convention_years, except: :destroy do
+  resources :convention_years, only: :update, constraints: lambda { |req| req.format == :json } do
     resources :photo_shoots, only: [:index, :new, :create]
   end
-  resources :photo_shoots, except: :destroy
+  resources :photo_shoots, only: :update, constraints: lambda { |req| req.format == :json }
 end
 
