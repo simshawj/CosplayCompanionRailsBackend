@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   validates :username, presence: true
   validates_uniqueness_of :username, case_sensitive: false
   # Include default devise modules. Others available are:

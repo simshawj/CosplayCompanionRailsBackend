@@ -24,20 +24,20 @@ describe ConventionsController do
     context "as JSON" do
       context "with a valid convention" do
         it "returns a status code of 201" do
-          post :create, convention: convention_attribs, format: :json
+          post :create, params: { convention: convention_attribs }, format: :json
           expect(response.status).to eq(201)
         end
         it "saves a Convention" do
-          expect{post :create, convention: convention_attribs, format: :json}.to change{Convention.count}.by(1)
+          expect{post :create, params: { convention: convention_attribs }, format: :json}.to change{Convention.count}.by(1)
         end
       end
       context "with an invalid convention" do
         it "returns a status code of 422" do
-          post :create, convention: invalid_convention_attribs, format: :json
+          post :create, params: { convention: invalid_convention_attribs }, format: :json
           expect(response.status).to eq(422)
         end
         it "does not save a Convention" do
-          expect{post :create, convention: invalid_convention_attribs, format: :json}.not_to change{Convention.count}
+          expect{post :create, params: { convention: invalid_convention_attribs }, format: :json}.not_to change{Convention.count}
         end
       end
     end
@@ -50,7 +50,7 @@ describe ConventionsController do
   describe "PUT #update" do
     context "using JSON" do
       context "with valid attributes" do
-        before(:each) {put :update, id: id, convention: second_valid_convention_attribs, format: :json}
+        before(:each) {put :update, params: { id: id, convention: second_valid_convention_attribs }, format: :json}
         it "responds with a 200 status" do
           expect(response.status).to eq(200)
         end
@@ -61,7 +61,7 @@ describe ConventionsController do
       end
 
       context "with invalid attributes" do
-        before(:each) {put :update, id: id, convention: invalid_convention_attribs, format: :json}
+        before(:each) {put :update, params: { id: id, convention: invalid_convention_attribs }, format: :json}
         it "responds with a 422 status" do
           expect(response.status).to eq(422)
         end

@@ -12,7 +12,7 @@ describe PhotoShootsController do
     context "as json" do
       before(:each) do
         photo_shoot
-        get :index, convention_year_id: convention_year.id, format: :json
+        get :index, params: { convention_year_id: convention_year.id }, format: :json
       end
       it "responds with a 200 status code" do
         expect(response.status).to eq(200)
@@ -27,13 +27,13 @@ describe PhotoShootsController do
     context "as JSON" do
       context "with valid parameters" do
         it "responds with a 201 code" do
-          post :create, photo_shoot: valid_attribs, format: :json
+          post :create, params: { photo_shoot: valid_attribs, convention_year_id: convention_year.id }, format: :json
           expect(response.status).to eq(201)
         end
       end
       context "with invalid parameters" do
         it "respondsd with a 422 code" do
-          post :create, photo_shoot: invalid_attribs, format: :json
+          post :create, params: { photo_shoot: invalid_attribs, convention_year_id: convention_year.id }, format: :json
           expect(response.status).to eq(422)
         end
       end
@@ -41,18 +41,7 @@ describe PhotoShootsController do
   end
 
   describe "GET #show" do
-    context "with an invalid id" do
-      before(:each) do
-        photo_shoot.delete
-        get :show, id: id
-      end
-      it "redirects to the :index view" do
-        expect(response).to redirect_to photo_shoots_path
-      end
-      it "sets flash alert message" do
-        expect(flash[:alert]).to be_present
-      end
-    end
+    #NYI
   end
 
   describe "PUT update" do
@@ -60,13 +49,13 @@ describe PhotoShootsController do
       before(:each) { photo_shoot }
       context "with valid parameters" do
         it "responds with a 200 code" do
-          put :update, id: id,  photo_shoot: second_valid_attribs, format: :json
+          put :update, params: { id: id,  photo_shoot: second_valid_attribs }, format: :json
           expect(response.status).to eq(200)
         end
       end
       context "with invalid parameters" do
-        it "respondsd with a 422 code" do
-          put :update, id: id, photo_shoot: invalid_attribs, format: :json
+        it "responds with a 422 code" do
+          put :update, params: { id: id, photo_shoot: invalid_attribs }, format: :json
           expect(response.status).to eq(422)
         end
       end

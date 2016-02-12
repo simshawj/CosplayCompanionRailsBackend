@@ -14,13 +14,13 @@ describe ConventionYearsController do
         convention_year
       end
       it "responds with JSON" do
-        get :index, format: :json, convention_id: convention
+        get :index, params: { convention_id: convention }, format: :json
         expect(response.body).to eq([convention_year].to_json)
       end
       it "returns only the convention years for the given convention" do
         convention2 = create(:convention, name: "Second")
         convention2_year = create(:convention_year, convention: convention2)
-        get :index, format: :json, convention_id: convention
+        get :index, params: { convention_id: convention }, format: :json
         expect(response.body).to eq([convention_year].to_json)
       end
     end
@@ -30,13 +30,13 @@ describe ConventionYearsController do
     context "as JSON" do
       context "with valid parameters" do
         it "returns a status code of 201" do
-          post :create, convention_year: convention_year_attribs, format: :json
+          post :create, params: { convention_year: convention_year_attribs, convention_id:convention.id }, format: :json
           expect(response.status).to eq(201)
         end
       end
       context "with invalid parameters" do
         it "returns a status code of 422" do
-          post :create, convention_year: invalid_attribs, format: :json
+          post :create, params: { convention_year: invalid_attribs, convention_id:convention.id }, format: :json
           expect(response.status).to eq(422)
         end
       end
@@ -44,32 +44,20 @@ describe ConventionYearsController do
   end
 
   describe "GET #show" do
-    context "with an invalid id" do
-      before(:each) do
-        convention_year.delete
-        get :show, id: id
-      end
-      it "redirects to the :index view" do
-        expect(response).to redirect_to convention_years_path
-      end
-
-      it "sets flash alert message" do
-        expect(flash[:alert]).to be_present
-      end
-    end
+    #NYI
   end
 
   describe "PUT #update" do
     context "using JSON" do
       context "with valid attributes" do
         it "responds with a 200 status" do
-          put :update, id: id, convention_year: second_attribs, format: :json
+          put :update, params: { id: id, convention_year: second_attribs }, format: :json
           expect(response.status).to eq(200)
         end
       end
       context "with invalid attributes" do
         it "responds with a 422 status" do
-          put :update, id: id, convention_year: invalid_attribs, format: :json
+          put :update, params: { id: id, convention_year: invalid_attribs }, format: :json
           expect(response.status).to eq(422)
         end
       end

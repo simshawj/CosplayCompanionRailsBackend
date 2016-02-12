@@ -1,4 +1,4 @@
-class PhotoShoot < ActiveRecord::Base
+class PhotoShoot < ApplicationRecord
   belongs_to :convention_year
 
   validates :series, presence: true

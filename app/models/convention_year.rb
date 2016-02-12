@@ -1,4 +1,4 @@
-class ConventionYear < ActiveRecord::Base
+class ConventionYear < ApplicationRecord
   before_save :setup_display_name
 
   belongs_to :convention
