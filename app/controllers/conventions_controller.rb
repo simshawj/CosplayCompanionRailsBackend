@@ -1,10 +1,7 @@
 class ConventionsController < ApplicationController
-  #skip_before_action :verify_authenticity_token
   def index
     @conventions = Convention.all
-    respond_to do |format|
-      format.json { render json: @conventions }
-    end
+    render json: @conventions
   end
 
   def create
@@ -13,13 +10,9 @@ class ConventionsController < ApplicationController
       @convention.logo = parse_png_from_base64(params[:logo64], params[:name])
     end
     if @convention.save
-      respond_to do |format|
-        format.json { render json: @convention, status: 201 }
-      end
+      render json: @convention, status: 201
     else
-      respond_to do |format|
-        format.json { render json: { errors: @convention.errors.full_messages }, status: 422 }
-      end
+      render json: { errors: @convention.errors.full_messages }, status: 422 
     end
   end
 
@@ -35,13 +28,9 @@ class ConventionsController < ApplicationController
   def update
     @convention = Convention.find(params[:id])
     if @convention.update(convention_params)
-      respond_to do |format|
-        format.json { render json: @convention, status: 200 }
-      end
+      render json: @convention, status: 200
     else
-      respond_to do |format|
-        format.json { render json: { errors: @convention.errors.full_messages }, status: 422 }
-      end
+      render json: { errors: @convention.errors.full_messages }, status: 422 
     end
   end
 
