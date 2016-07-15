@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
-ruby '2.3.0'
+ruby '2.3.1'
 
-gem 'rails', '5.0.0.beta2'
+gem 'rails', '5.0.0'
 
 gem 'pg'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog-aws'
-gem 'devise', '~> 4.0.0.rc1'
+gem 'devise' 
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -17,7 +17,7 @@ group :doc do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.5.0.beta1'
+  gem 'rspec-rails'
   gem 'factory_girl_rails'
 end
 
