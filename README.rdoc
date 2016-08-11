@@ -1,6 +1,6 @@
 == README
 
-Cosplay Companion currently is a Ruby on Rails API backend and Android app to help cosplayers coordinate photoshoot gatherings at conventions.
+Cosplay Companion currently is a Ruby on Rails API backend and Android app to help cosplayers coordinate photoshoot gatherings at conventions.  This is the Ruby on Rails API backend.
 
 Running on Ruby 2.3.1 and Ruby on Rails 5, with a PostgreSQL database utilizing:
 *Carrierwave
