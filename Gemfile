@@ -7,6 +7,9 @@ gem 'pg'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog-aws'
+gem 'devise'
+gem 'omniauth'
+gem 'devise_token_auth'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

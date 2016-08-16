@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  include DeviseTokenAuth::Concerns::SetUserByToken
   include ActionController::MimeResponds
 
   # Prevent CSRF attacks by raising an exception.
