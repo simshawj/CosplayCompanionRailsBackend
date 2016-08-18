@@ -1,4 +1,6 @@
 class ConventionYearsController < ApplicationController
+  before_action :authenticate_user!, :except => [:index]
+
   def index
     convention = Convention.find(params[:convention_id])
     @convention_years = convention.convention_years

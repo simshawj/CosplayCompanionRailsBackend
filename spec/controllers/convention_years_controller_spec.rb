@@ -7,6 +7,8 @@ describe ConventionYearsController do
   let(:invalid_attribs) { attributes_for(:convention_year).merge(convention_id: nil) }
   let(:convention_year_attribs) { invalid_attribs.merge(convention_id: convention.id) }
   let(:second_attribs) { attributes_for(:convention_year, finish: Date.today + 7.days).merge(convention_id: convention.id) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:user_token) { user.create_new_auth_token }
 
   describe "GET #index" do
     context "as JSON" do
@@ -28,17 +30,38 @@ describe ConventionYearsController do
 
   describe "POST #Create" do
     context "as JSON" do
-      context "with valid parameters" do
-        it "returns a status code of 201" do
-          post :create, params: { convention_year: convention_year_attribs, convention_id:convention.id }, format: :json
-          expect(response.status).to eq(201)
+      context "not signed in" do
+        context "with valid parameters" do
+          it "returns a status code of 401" do
+            post :create, params: { convention_year: convention_year_attribs, convention_id:convention.id }, format: :json
+            expect(response.status).to eq(401)
+          end
+        end
+        context "with invalid parameters" do
+          it "returns a status code of 401" do
+            post :create, params: { convention_year: invalid_attribs, convention_id:convention.id }, format: :json
+            expect(response.status).to eq(401)
+          end
         end
       end
-      context "with invalid parameters" do
-        it "returns a status code of 422" do
-          post :create, params: { convention_year: invalid_attribs, convention_id:convention.id }, format: :json
-          expect(response.status).to eq(422)
+      
+      context "signed in" do
+        before(:each) do
+          @request.headers.merge!(user_token)
         end
+        context "with valid parameters" do
+          it "returns a status code of 201" do
+            post :create, params: { convention_year: convention_year_attribs, convention_id:convention.id }, format: :json
+            expect(response.status).to eq(201)
+          end
+        end
+        context "with invalid parameters" do
+          it "returns a status code of 422" do
+            post :create, params: { convention_year: invalid_attribs, convention_id:convention.id }, format: :json
+            expect(response.status).to eq(422)
+          end
+        end
+      
       end
     end
   end
@@ -49,16 +72,36 @@ describe ConventionYearsController do
 
   describe "PUT #update" do
     context "using JSON" do
-      context "with valid attributes" do
-        it "responds with a 200 status" do
-          put :update, params: { id: id, convention_year: second_attribs }, format: :json
-          expect(response.status).to eq(200)
+      context "not signed in" do
+        context "with valid attributes" do
+          it "responds with a 401 status" do
+            put :update, params: { id: id, convention_year: second_attribs }, format: :json
+            expect(response.status).to eq(401)
+          end
+        end
+        context "with invalid attributes" do
+          it "responds with a 401 status" do
+            put :update, params: { id: id, convention_year: invalid_attribs }, format: :json
+            expect(response.status).to eq(401)
+          end
         end
       end
-      context "with invalid attributes" do
-        it "responds with a 422 status" do
-          put :update, params: { id: id, convention_year: invalid_attribs }, format: :json
-          expect(response.status).to eq(422)
+      
+      context "signed in" do
+        before(:each) do
+          @request.headers.merge!(user_token)
+        end
+        context "with valid attributes" do
+          it "responds with a 200 status" do
+            put :update, params: { id: id, convention_year: second_attribs }, format: :json
+            expect(response.status).to eq(200)
+          end
+        end
+        context "with invalid attributes" do
+          it "responds with a 422 status" do
+            put :update, params: { id: id, convention_year: invalid_attribs }, format: :json
+            expect(response.status).to eq(422)
+          end
         end
       end
     end
