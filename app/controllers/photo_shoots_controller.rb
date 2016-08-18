@@ -1,4 +1,6 @@
 class PhotoShootsController < ApplicationController
+  before_action :authenticate_user!, :except => [:index]
+
   def index
     convention_year = ConventionYear.find(params[:convention_year_id])
     @photo_shoots = convention_year.photo_shoots
