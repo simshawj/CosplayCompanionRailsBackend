@@ -80,7 +80,7 @@ describe ConventionsController do
       context "not signed in" do
         context "with valid attributes" do
           before(:each) {put :update, params: { id: id, convention: second_valid_convention_attribs }, format: :json}
-          it "responds with a 200 status" do
+          it "responds with a 401 status" do
             expect(response.status).to eq(401)
           end
           it "updates the convention" do
@@ -91,7 +91,7 @@ describe ConventionsController do
 
         context "with invalid attributes" do
           before(:each) {put :update, params: { id: id, convention: invalid_convention_attribs }, format: :json}
-          it "responds with a 422 status" do
+          it "responds with a 401 status" do
             expect(response.status).to eq(401)
           end
           it "does not update the convention" do
