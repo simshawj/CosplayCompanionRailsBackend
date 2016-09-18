@@ -1,5 +1,6 @@
 class Convention < ApplicationRecord
   has_many :convention_years
+  belongs_to :user
 
   mount_uploader :logo, ConventionLogoUploader
 

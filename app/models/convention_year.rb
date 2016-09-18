@@ -2,6 +2,7 @@ class ConventionYear < ApplicationRecord
   before_save :setup_display_name
 
   belongs_to :convention
+  belongs_to :user
   has_many :photo_shoots
 
   validates :start, presence: true

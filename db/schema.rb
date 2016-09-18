@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816024455) do
+ActiveRecord::Schema.define(version: 20160918031840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,9 @@ ActiveRecord::Schema.define(version: 20160816024455) do
     t.date     "finish"
     t.string   "display"
     t.string   "location"
+    t.integer  "user_id"
     t.index ["convention_id"], name: "index_convention_years_on_convention_id", using: :btree
+    t.index ["user_id"], name: "index_convention_years_on_user_id", using: :btree
   end
 
   create_table "conventions", force: :cascade do |t|
@@ -32,7 +34,9 @@ ActiveRecord::Schema.define(version: 20160816024455) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "logo"
+    t.integer  "user_id"
     t.index ["name"], name: "index_conventions_on_name", unique: true, using: :btree
+    t.index ["user_id"], name: "index_conventions_on_user_id", using: :btree
   end
 
   create_table "photo_shoots", force: :cascade do |t|
@@ -43,8 +47,10 @@ ActiveRecord::Schema.define(version: 20160816024455) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "convention_year_id"
+    t.integer  "user_id"
     t.index ["convention_year_id"], name: "index_photo_shoots_on_convention_year_id", using: :btree
     t.index ["series", "start", "convention_year_id"], name: "index_photo_shoots_on_series_and_start_and_convention_year_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_photo_shoots_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

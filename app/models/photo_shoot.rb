@@ -1,5 +1,6 @@
 class PhotoShoot < ApplicationRecord
   belongs_to :convention_year
+  belongs_to :user
 
   validates :series, presence: true
   validates :start, presence: true
