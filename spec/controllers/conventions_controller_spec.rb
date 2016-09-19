@@ -1,14 +1,16 @@
 require 'rails_helper'
 
 describe ConventionsController do
+  let(:user) { FactoryGirl.create(:user) }
+  let(:user_token) { user.create_new_auth_token }
+  let(:second_user) { FactoryGirl.create(:user) }
+  let(:second_user_token) { second_user.create_new_auth_token }
   let(:invalid_convention_attribs) { FactoryGirl.attributes_for(:convention, name: nil) }
   let(:convention_attribs) { FactoryGirl.attributes_for(:convention) }
-  let(:convention) { FactoryGirl.create(:convention) }
+  let(:convention) { FactoryGirl.create(:convention, user: user) }
   let(:id) { convention.id }
   let(:second_valid_convention_name) { "A new convention" }
   let(:second_valid_convention_attribs) { FactoryGirl.attributes_for(:convention, name: second_valid_convention_name) }
-  let(:user) { FactoryGirl.create(:user) }
-  let(:user_token) { user.create_new_auth_token }
 
   describe "GET #index" do
     context "as json" do
@@ -123,6 +125,20 @@ describe ConventionsController do
           end
           it "responds with a 422 status" do
             expect(response.status).to eq(422)
+          end
+          it "does not update the convention" do
+            convention.reload
+            expect(convention.name).to eq("Test Convention")
+          end
+        end
+
+        context "as a second user" do
+          before(:each) do
+            @request.headers.merge!(second_user_token)
+            put :update, params: { id: id, convention: second_valid_convention_attribs }, format: :json
+          end
+          it "responds with a 401 status" do
+            expect(response.status).to eq(401)
           end
           it "does not update the convention" do
             convention.reload

@@ -7,14 +7,17 @@ class ConventionsController < ApplicationController
   end
 
   def create
-    @convention = Convention.new(convention_params)
-    if params[:logo64]
-      @convention.logo = parse_png_from_base64(params[:logo64], params[:name])
-    end
-    if @convention.save
-      render json: @convention, status: 201
-    else
-      render json: { errors: @convention.errors.full_messages }, status: 422 
+    if current_user
+      @convention = current_user.convention.build(convention_params)
+
+      if params[:logo64]
+        @convention.logo = parse_png_from_base64(params[:logo64], params[:name])
+      end
+      if @convention.save
+        render json: @convention, status: 201
+      else
+        render json: { errors: @convention.errors.full_messages }, status: 422 
+      end
     end
   end
 
@@ -28,11 +31,17 @@ class ConventionsController < ApplicationController
   end
 
   def update
-    @convention = Convention.find(params[:id])
-    if @convention.update(convention_params)
-      render json: @convention, status: 200
-    else
-      render json: { errors: @convention.errors.full_messages }, status: 422 
+    if current_user
+      @convention = current_user.convention.find_by_id(params[:id])
+      if @convention
+        if @convention.update(convention_params)
+          render json: @convention, status: 200
+        else
+          render json: { errors: @convention.errors.full_messages }, status: 422 
+        end
+      else
+        render json: { errors: "No convention found for user" }, status: 401
+      end
     end
   end
 
