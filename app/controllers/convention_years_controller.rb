@@ -8,11 +8,13 @@ class ConventionYearsController < ApplicationController
   end
   
   def create
-    @convention_year = ConventionYear.new(convention_year_params)
-    if @convention_year.save
-      render json: @convention_year, status: 201
-    else
-      render json: { errors: @convention_year.errors.full_messages }, status: 422
+    if current_user
+      @convention_year = current_user.convention_year.build(convention_year_params)
+      if @convention_year.save
+        render json: @convention_year, status: 201
+      else
+        render json: { errors: @convention_year.errors.full_messages }, status: 422
+      end
     end
   end
 
@@ -26,11 +28,17 @@ class ConventionYearsController < ApplicationController
   end
 
   def update
-    @convention_year = ConventionYear.find(params[:id])
-    if @convention_year.update(convention_year_params)
-      render json: @convention_year, status: 200 
-    else
-      render json: { errors: @convention_year.errors.full_messages }, status: 422 
+    if current_user
+      @convention_year = current_user.convention_year.find_by_id(params[:id])
+      if @convention_year
+        if @convention_year.update(convention_year_params)
+          render json: @convention_year, status: 200 
+        else
+          render json: { errors: @convention_year.errors.full_messages }, status: 422
+        end
+      else
+        render json: { errors: "No convention year found for user" }, status: 401
+      end
     end
   end
 

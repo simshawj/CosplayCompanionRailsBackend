@@ -1,14 +1,16 @@
 require 'rails_helper'
 
 describe ConventionYearsController do
+  let(:user) { FactoryGirl.create(:user) }
+  let(:user_token) { user.create_new_auth_token }
+  let(:second_user) { FactoryGirl.create(:user) }
+  let(:second_user_token) { second_user.create_new_auth_token }
   let!(:convention) { create(:convention) }
-  let(:convention_year) { create(:convention_year, convention: convention) }
+  let(:convention_year) { create(:convention_year, convention: convention, user:user) }
   let(:id) { convention_year.id }
   let(:invalid_attribs) { attributes_for(:convention_year).merge(convention_id: nil) }
   let(:convention_year_attribs) { invalid_attribs.merge(convention_id: convention.id) }
   let(:second_attribs) { attributes_for(:convention_year, finish: Date.today + 7.days).merge(convention_id: convention.id) }
-  let(:user) { FactoryGirl.create(:user) }
-  let(:user_token) { user.create_new_auth_token }
 
   describe "GET #index" do
     context "as JSON" do
@@ -102,6 +104,16 @@ describe ConventionYearsController do
             put :update, params: { id: id, convention_year: invalid_attribs }, format: :json
             expect(response.status).to eq(422)
           end
+        end
+      end
+      
+      context "as a second user" do
+        before(:each) do
+          @request.headers.merge!(second_user_token)
+          put :update, params: { id: id, convention_year: second_attribs }, format: :json
+        end
+        it "responds with a 401 status" do
+          expect(response.status).to eq(401)
         end
       end
     end
