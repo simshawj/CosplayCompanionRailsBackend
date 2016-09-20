@@ -8,11 +8,13 @@ class PhotoShootsController < ApplicationController
   end
 
   def create
-    @photo_shoot = PhotoShoot.new(photo_shoot_params)
-    if @photo_shoot.save
-      render json: @photo_shoot, status: 201 
-    else
-      render json: { errors: @photo_shoot.errors.full_messages }, status: 422
+    if current_user
+      @photo_shoot = current_user.photo_shoot.build(photo_shoot_params)
+      if @photo_shoot.save
+        render json: @photo_shoot, status: 201 
+      else
+        render json: { errors: @photo_shoot.errors.full_messages }, status: 422
+      end
     end
   end
 
@@ -25,11 +27,17 @@ class PhotoShootsController < ApplicationController
   end
 
   def update
-    @photo_shoot = PhotoShoot.find(params[:id])
-    if @photo_shoot.update(photo_shoot_params)
-      render json: @photo_shoot, status: 200 
-    else
-      render json: { errors: @photo_shoot.errors.full_messages }, status: 422 
+    if current_user
+      @photo_shoot = current_user.photo_shoot.find_by_id(params[:id])
+      if @photo_shoot
+        if @photo_shoot.update(photo_shoot_params)
+          render json: @photo_shoot, status: 200 
+        else
+          render json: { errors: @photo_shoot.errors.full_messages }, status: 422 
+        end
+      else
+        render json: { errors: "No photo_shoot found for user" }, status: 401
+      end
     end
   end
 

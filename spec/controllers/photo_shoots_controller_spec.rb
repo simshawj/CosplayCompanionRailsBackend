@@ -1,14 +1,16 @@
 require 'rails_helper'
 
 describe PhotoShootsController do
+  let(:user) { FactoryGirl.create(:user) }
+  let(:user_token) { user.create_new_auth_token }
+  let(:second_user) { FactoryGirl.create(:user) }
+  let(:second_user_token) { second_user.create_new_auth_token }
   let!(:convention_year) { create(:convention_year) }
-  let(:photo_shoot) { create(:photo_shoot, convention_year: convention_year) }
+  let(:photo_shoot) { create(:photo_shoot, convention_year: convention_year, user: user) }
   let(:valid_attribs) { attributes_for(:photo_shoot).merge(convention_year_id: convention_year.id) }
   let(:second_valid_attribs) { attributes_for(:photo_shoot, series: "Another series").merge(convention_id: convention_year.id) }
   let(:invalid_attribs) { valid_attribs.merge(convention_year_id: nil) }
   let(:id) { photo_shoot.id }
-  let(:user) { FactoryGirl.create(:user) }
-  let(:user_token) { user.create_new_auth_token }
 
 
   describe "GET #index" do
@@ -101,6 +103,16 @@ describe PhotoShootsController do
             put :update, params: { id: id, photo_shoot: invalid_attribs }, format: :json
             expect(response.status).to eq(422)
           end
+        end
+      end
+
+      context "as a second user" do
+        before(:each) do
+          @request.headers.merge!(second_user_token)
+          put :update, params: { id: id, photo_shoot: second_valid_attribs }, format: :json
+        end
+        it "responds with a 401 status" do
+          expect(response.status).to eq(401)
         end
       end
     end
