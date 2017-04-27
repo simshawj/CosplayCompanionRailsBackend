@@ -11,7 +11,7 @@ class ConventionsController < ApplicationController
       @convention = current_user.convention.build(convention_params)
 
       if params[:logo64]
-        @convention.logo = parse_png_from_base64(params[:logo64], params[:name])
+        @convention.logo = parse_png_from_base64(params[:logo64])
       end
       if @convention.save
         render json: @convention, status: 201
@@ -34,6 +34,9 @@ class ConventionsController < ApplicationController
     if current_user
       @convention = current_user.convention.find_by_id(params[:id])
       if @convention
+        if params[:logo64]
+          @convention.logo = parse_png_from_base64(params[:logo64])
+        end
         if @convention.update(convention_params)
           render json: @convention, status: 200
         else
@@ -49,7 +52,7 @@ class ConventionsController < ApplicationController
     params.require(:convention).permit(:name, :description, :logo)
   end
 
-  def parse_png_from_base64(image, filename)
+  def parse_png_from_base64(image)
     return image if not image.is_a?(String)
     tempfile = Tempfile.new("temp_logo")
     tempfile.binmode
@@ -60,7 +63,7 @@ class ConventionsController < ApplicationController
 
     ActionDispatch::Http::UploadedFile.new(
       :tempfile => tempfile,
-      :filename => File.basename("#{filename}_logo.png"),
+      :filename => File.basename("logo.png"),
       :type => type)
   end
 end
